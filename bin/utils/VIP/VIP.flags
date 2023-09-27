@@ -1,0 +1,13 @@
+-ignore_unrecognized_res
+-cp:ncycles 4
+-cp:cutoff 7.0
+-cp:max_failures 5
+-sasa_calculator_probe_radius 1.0
+
+-cp:pack_sfxn ref2015
+
+-cp:relax_sfxn ref2015
+-cp:relax_mover "relax"
+
+-cp:print_reports
+-cp:print_intermediate_pdbs
