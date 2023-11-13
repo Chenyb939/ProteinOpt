@@ -1,14 +1,16 @@
 # ProteinOpt: Protein Stability Optimization Tool
 
-ProteinOpt is a protein stability optimization tool based on Rosetta, designed to assist researchers and bioinformaticians in improving protein structures and stability. This tool offers four distinct protein optimization methods, including:
+ProteinOpt is a multi-objective optimization tool specifically designed for vaccine antigens and decoys, leveraging the Rosetta software suite and Snakemake.
+ProteinOpt is designed to assist researchers in conveniently and swiftly conducting protein stability optimization operations using local resources. ProteinOpt offers four distinct protein optimization methods, including:
 
-1. **Point Mutation Scanning**: Point Mutation Scanning involves mutating amino acids that are either recorded in wet lab experiments or manually marked. It employs a multi-point mutation approach to discover the most stable protein conformation.
 
-2. **Mutation Cluster**: In Mutation Cluster, the aim is to identify amino acids that, when subjected to single-point saturation mutagenesis, result in the most significant reduction in sequence energy. Subsequently, a multi-point mutation method is used to find the most stable protein conformation based on these identified amino acids.
+1. **Point Mutation Scanning**: In Point Mutation Scanning, the aim is to identify amino acids that, when subjected to single-point saturation mutagenesis, result in the most significant reduction in sequence energy. Subsequently, a multi-point mutation method is used to find the most stable protein conformation based on these identified amino acids.
+
+2. **RosettaVIP**: RosettaVIP calculates protein cavities within the input protein and fills them with mutations. It employs a multi-point mutation approach based on these mutated amino acids to search for the most stable protein conformation.
    
 3. **Supercharge**: Supercharge focuses on mutating polar amino acids within the input protein to find the lowest/highest electrostatic potential. It then utilizes a multi-point mutation approach based on the mutated amino acids to discover the most stable protein conformation.
    
-4. **RosettaVIP**: RosettaVIP calculates protein cavities within the input protein and fills them with mutations. It employs a multi-point mutation approach based on these mutated amino acids to search for the most stable protein conformation.
+4. **Manually Specified Seed Residues**: Manually Specified Seed Residues involves mutating amino acids that are either recorded in wet lab experiments or manually marked. It employs a multi-point mutation approach to discover the most stable protein conformation.
 
 ## Installation
 
@@ -16,7 +18,7 @@ To get started with ProteinOpt, follow these steps:
 
 1. Clone this repository to your local machine:
    ```bash
-   git clone https://github.com/yourusername/ProteinOpt.git
+   git clone https://github.com/Chenyb939/ProteinOpt.git
    ```
 2. Navigate to the project directory:
    ```bash
@@ -41,8 +43,11 @@ To get started with ProteinOpt, follow these steps:
    
 ## How to Use
 
+ProteinOpt can be thought of as a two-step pipeline. In the initial step, users can utilize three classic Rosetta protocols to find seed residue(s), including point mutation scanning, RosettaVIP (Void Identification and Packing), and Supercharge. Besides, users can also manually specify seed residues as input. In the second step, ProteinOpt applies the mutation cluster protocol to further refine the conformation of the protein. 
+
 To utilize ProteinOpt effectively, follow these steps:
-1. Start by running the `stab_dp.py` script. This script is responsible for processing input files and generating the necessary files required for running ProteinOpt:
+1. Initial step
+   Start by running the `stab_dp.py` script. This script is responsible for processing input files and generating the necessary files required for running ProteinOpt:
    ```bash
    usage: python stab_dp.py [--job_name] [--input_file] [--target_chain] [--node] [--ntasks] [--num] [--top_pm_num] [--in_site] [--super_method] [--super_target]
 
@@ -58,7 +63,8 @@ To utilize ProteinOpt effectively, follow these steps:
       --super_method          Supercharge methods (if use Supercharge protocol; default: residue)
       --super_target          Supercharge target (if use Supercharge protocol; default: positive)
    ```
-2. After running, you can open the `./[job_name]/config.yaml` file to view and modify the required configurations.
+2. Protein optimization
+   After running, you can open the `./[job_name]/config.yaml` file to view and modify the required configurations.
    ```
    ROSETTA:                   Directory of the installed Rosetta suite
    ROSETTA_BIN:               Bin directory of the Rosetta suite
@@ -96,11 +102,11 @@ To utilize ProteinOpt effectively, follow these steps:
    bash ./[job_name]/snakemake/run1.sh
    # Perform Point Mutation Scanning optimization using the following command:
    bash ./[job_name]/snakemake/run2.sh
-   # Execute Point Mutation Scanning optimization with the following command:
+   # Execute Manually Specified Seed Residues optimization with the following command:
    bash ./[job_name]/snakemake/run3.sh
    # Initiate Supercharge optimization using the following command:
    bash ./[job_name]/snakemake/run4.1.sh
-   # Initiate Supercharge optimization using the following command:
+   # Initiate Supercharge optimization (reference base) using the following command:
    bash ./[job_name]/snakemake/run4.2.sh
    # Launch RosettaVIP optimization with the following command:
    bash ./[job_name]/snakemake/run5.sh

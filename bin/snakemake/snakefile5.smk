@@ -88,8 +88,8 @@ rule move_VIP:
         reports = RUN_DIR + '/reports.txt',
         Relaxed_path = RUN_DIR + '/final_mutant.pdb',
         Out_name = DATA_PATH + '/Mutate/final_mutant.pdb',
-        Out_path = DATA_PATH + '/Mutate'
-        out_file1 = RUN_DIR + 'vip_iter_1.pdb'
+        Out_path = DATA_PATH + '/Mutate',
+        out_file1 = RUN_DIR + 'vip_iter_1.pdb',
         out_file2 = RUN_DIR + 'vip_iter_2.pdb'
     threads:
         1
