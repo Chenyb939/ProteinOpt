@@ -1,14 +1,13 @@
 # ProteinOpt: Protein Stability Optimization Tool
 
-ProteinOpt is a multi-objective optimization tool specifically designed for vaccine antigens and decoys, leveraging the Rosetta software suite and Snakemake.
-ProteinOpt is designed to assist researchers in conveniently and swiftly conducting protein stability optimization operations using local resources. ProteinOpt offers four distinct protein optimization methods, including:
+ProteinOpt is a multi-objective optimization tool specifically designed for vaccine antigens and decoys, leveraging the Rosetta software suite and Snakemake. ProteinOpt is designed to assist researchers in conveniently and swiftly conducting protein stability optimization operations using local resources. ProteinOpt offers four distinct protein optimization methods, including:
 
 
 1. **Point Mutation Scanning**: Point Mutation Scanning identifies the seed residues by recording the amino acid with the most reduced energy in the sequence during single-point saturation mutations. During the single-point saturation mutation, ProteinOpt refrains from recording any information regarding the energy reduction associated with cysteine (C) to ensure that there is no substantial alteration to the protein structure. Subsequently, a multi-point mutation method is used to find the most stable protein conformation based on these identified amino acids.
-
-2. **Supercharge**: Supercharge focuses on mutating polar amino acids within the input protein to find the lowest/highest electrostatic potential. After running Supercharge protocol, there will be two types of result files. One is the **reference file** that records which amino acids can increase or decrease the electrostatic potential of the input protein, and the other is the **mutated protein file**. During multi-point mutation approach, you can choose which result to use for optimization based on your needs. When using the reference file, the system has a larger search space and higher randomness. When using the mutated protein file, the system has shorter running time and more conservative results.
    
-3. **RosettaVIP**: RosettaVIP calculates protein cavities within the input protein and fills them with mutations. It employs a multi-point mutation approach based on these mutated amino acids to search for the most stable protein conformation.
+2. **RosettaVIP**: RosettaVIP calculates protein cavities within the input protein and fills them with mutations. It employs a multi-point mutation approach based on these mutated amino acids to search for the most stable protein conformation.
+
+3. **Supercharge**: Supercharge focuses on mutating polar amino acids within the input protein to find the lowest/highest electrostatic potential. After running Supercharge protocol, there will be two types of result files. One is the **reference file** that records which amino acids can increase or decrease the electrostatic potential of the input protein, and the other is the **mutated protein file**. During multi-point mutation approach, you can choose which result to use for optimization based on your needs. When using the reference file, the system has a larger search space and higher randomness. When using the mutated protein file, the system has shorter running time and more conservative results.
    
 4. **Manually Specified Seed Residues**: Manually Specified Seed Residuescan can be selected based on experimental records and literature references to determine the amino acids that need to be mutated. ProteinOpt can utilize these residues for multi-point mutation methods to discover the most stable protein conformation.
 
