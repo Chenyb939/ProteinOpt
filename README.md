@@ -47,9 +47,8 @@ ProteinOpt can be thought of as a two-step pipeline. In the initial step, users 
 
 To utilize ProteinOpt effectively, follow these steps:
 1. Initial step
-   Start by running the `stab_dp.py` script. This script is responsible for processing input files and generating the necessary files required for running 
+   Start by running the `stab_dp.py` script. This script is responsible for processing input files and generating the necessary files required for running.
    
-2. Find seed residue(s):
    ```bash
    usage: python stab_dp.py [--job_name] [--input_file] [--target_chain] [--node] [--ntasks] [--num] [--top_pm_num] [--in_site] [--super_method] [--super_target]
 
@@ -65,7 +64,7 @@ To utilize ProteinOpt effectively, follow these steps:
       --super_method          Supercharge methods (if use Supercharge protocol; default: residue)
       --super_target          Supercharge target (if use Supercharge protocol; default: positive)
    ```
-2. Protein optimization
+2. Check optimization configurations
    After running, you can open the `./[job_name]/config.yaml` file to view and modify the required configurations.
    ```
    ROSETTA:                   Directory of the installed Rosetta suite
@@ -99,20 +98,28 @@ To utilize ProteinOpt effectively, follow these steps:
    ```
 
 3. Submit your optimization tasks using the provided bash script:
+
+   ProteinOpt optimization is divided into two steps. The first step involves preprocessing, while the second step allows you to choose the corresponding optimization strategy to run. Before running, please ensure that the parameters have been set correctly.
+   
+   Preprocessing step:
    ```bash 
-   # Run single-point saturation mutagenesis scanning with the following command:
-   bash ./[job_name]/snakemake/run1.sh
-   # Perform Point Mutation Scanning optimization using the following command:
-   bash ./[job_name]/snakemake/run2.sh
-   # Initiate Supercharge optimization using the following command:
-   bash ./[job_name]/snakemake/run4.1.sh
-   # Initiate Supercharge optimization (reference base) using the following command:
-   bash ./[job_name]/snakemake/run4.2.sh
-   # Launch RosettaVIP optimization with the following command:
-   bash ./[job_name]/snakemake/run5.sh
-   # Execute Manually Specified Seed Residues optimization with the following command:
-   bash ./[job_name]/snakemake/run3.sh
+   bash ./[job_name]/snakemake/preprocess.sh
    ```
+   Optimization step:
+
+   ```bash 
+   # Perform Point Mutation Scanning optimization using the following command:
+   bash ./[job_name]/snakemake/PMS.sh
+   # Initiate Supercharge optimization using the following command:
+   bash ./[job_name]/snakemake/Supercharge.sh
+   # Initiate Supercharge optimization (reference base) using the following command:
+   bash ./[job_name]/snakemake/Supercharge_ref.sh
+   # Launch RosettaVIP optimization with the following command:
+   bash ./[job_name]/snakemake/RosettaVIP.sh
+   # Execute Manually Specified Seed Residues optimization with the following command:
+   bash ./[job_name]/snakemake/Manual.sh
+   ```
+
 4. Check the optimization results.
    
    Check the optimization results in the `./[job_name]/output/data` folder.

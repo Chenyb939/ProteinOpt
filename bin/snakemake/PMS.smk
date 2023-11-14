@@ -32,7 +32,7 @@ TOP_PM_NUM = config['TOP_PM_NUM']
 ## main
 rule all:
     input:
-        RUN_FILE + '/run2.sh',
+        RUN_FILE + '/PMS.sh',
         DATA_PATH + '/Com_PM_PM/socre.sc'
 
 
@@ -40,7 +40,7 @@ rule gen_Com_PM:
     input:
         D_score = RUN_FILE + '/d_score.csv'
     output:
-        Shell_file = RUN_FILE + '/run2.sh'
+        Shell_file = RUN_FILE + '/PMS.sh'
     params:
         Distance_py =  UTILS_PATH + '/MC/distance_PM.py',
         WT_path = DATA_PATH + '/Cleaned_WT/' + WT_NAME + '_' + TARGET_CHAIN + '.pdb',
@@ -81,7 +81,7 @@ rule gen_Com_PM:
 
 rule Com_PM:
     input:
-        RUN_FILE + '/run2.sh'
+        RUN_FILE + '/PMS.sh'
     output:
         DATA_PATH + '/Com_PM_PM/socre.sc'
     params:
