@@ -30,10 +30,9 @@ To get started with ProteinOpt, follow these steps:
    pip install snakemake biopython pandas
    ```
 4. install Rosetta and PyRosetta 
-   
-   You can visit the [Rosetta](https://www.rosettacommons.org/software/license-and-download) website and download the Rosetta and PyRosetta Software Suite.
+   You can obtain licenses for Rosetta and PyRosetta by visiting the official [Rosetta](https://www.rosettacommons.org/software/license-and-download) website. If you intend to install the Rosetta software suite on an HPC system, please contact your system administrator. For installation on Linux machines, you can follow the tutorials on the Rosetta official website or use the Dockerfile we provided. Please be aware that, before installation, it is necessary to modify the line 21 of the Dockerfile, replacing 'account' and 'password' with the Rosetta account and password you have obtained.
 
-   Then, use the following command to configure the Rosetta environment variables.
+   Aftere installation, use the following command to configure the Rosetta environment variables.
    ```bash
    export PATH=$PATH:/path/to/rosetta/source/bin
    export ROSETTA=$ROSETTA:/path/to/rosetta
