@@ -25,8 +25,8 @@ To get started with ProteinOpt, follow these steps:
    ```
 3. Creat irtual environment and install the required dependencies:
    ```bash
-   conda activate ProteinOpt python=3.10
-   activate ProteinOpt
+   conda create -n ProteinOpt python=3.10
+   conda activate ProteinOpt
    pip install snakemake biopython pandas
    ```
 4. install Rosetta and PyRosetta 
