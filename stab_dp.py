@@ -7,9 +7,16 @@ from Bio.PDB import PDBParser
 warnings.filterwarnings("ignore")
 
 def preparation(BIN_DIR, WORK_DIR, WORK_NAME, INPUT_FILE):
+    if not os.path.exists(WORK_DIR):
+        os.mkdir(WORK_DIR)
+    print(os.path.join(WORK_DIR, WORK_NAME))
     if not os.path.exists(os.path.join(WORK_DIR, WORK_NAME)):
         os.mkdir(os.path.join(WORK_DIR, WORK_NAME))
+
     os.mkdir(os.path.join(WORK_DIR, WORK_NAME, 'data'))
+    # os.mkdir(os.path.join(WORK_DIR, WORK_NAME, 'snakemake'))
+    # os.mkdir(os.path.join(WORK_DIR, WORK_NAME, 'utils'))
+
     shutil.copytree(os.path.join(BIN_DIR, 'snakemake'), os.path.join(WORK_DIR, WORK_NAME, 'snakemake'))
     shutil.copytree(os.path.join(BIN_DIR, 'utils'), os.path.join(WORK_DIR, WORK_NAME, 'utils'))
     shutil.move(INPUT_FILE, os.path.join(WORK_DIR, WORK_NAME, 'data'))
@@ -37,13 +44,16 @@ def read_pdb_para(input_file, target_chain):
             all_pos.append(chain_pos)
 
     target_pos = all_pos[all_chains.index(target_chain.upper())]
-    start_pos = target_pos[0]
-    end_pos = target_pos[-1]
+    target_pos_num = [x for x in target_pos if x.isdigit()]
+    target_pos_num_sort = sorted(map(int, target_pos_num))
+    start_pos = target_pos_num_sort[0]
+    end_pos = target_pos_num_sort[-1]
     other_chain = all_chains.replace(target_chain, '')
 
     pdb_len = 0
     for i in all_pos:
         pdb_len += len(i)
+    # print(target_pos)
     return name, all_chains, other_chain, int(start_pos), int(end_pos), pdb_len
 
 def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER_CHAIN, DISTANCE, PDB_START, PDB_END, NODE, NTASKS, NUM, PDB_TOTAL, TARGET_METHOD, TARGET_CHARGE, TOP_PM_NUM, IN_SITE):
@@ -89,25 +99,28 @@ def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER
     with open(os.path.join(WORK_DIR, 'snakemake', 'config.yaml'), 'w') as file:
          yaml.dump(names, file, sort_keys=False)
     # print(open('config.yml').read())
+
 def write_bash(WORK_DIR, job_name, node, ntasks):
     SNAKE_dir = os.path.join(WORK_DIR, 'snakemake', '')
-    with open(os.path.join(WORK_DIR, 'snakemake', 'run1.sh'), 'w') as file:
-        file.write(f"#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}snakefile.smk -j {node*ntasks}")
-    with open(os.path.join(WORK_DIR, 'snakemake', 'run2.sh'), 'w') as file:
-        file.write(f"#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}snakefile2.smk -j {node*ntasks}")
-    with open(os.path.join(WORK_DIR, 'snakemake', 'run3.sh'), 'w') as file:
-            file.write(f"#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}snakefile3.smk -j {node*ntasks}")
-    with open(os.path.join(WORK_DIR, 'snakemake', 'run4.1.sh'), 'w') as file:
-            file.write(f"#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}snakefile4.1.smk -j {node*ntasks}")
-    with open(os.path.join(WORK_DIR, 'snakemake', 'run4.2.sh'), 'w') as file:
-            file.write(f"#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}snakefile4.2.smk -j {node*ntasks}")
-    with open(os.path.join(WORK_DIR, 'snakemake', 'run5.sh'), 'w') as file:
-            file.write(f"#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}snakefile5.smk -j {node*ntasks}")
+    with open(os.path.join(WORK_DIR, job_name, 'snakemake', 'preprocess.sh'), 'w') as file:
+        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}_preprocess\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}preprocess.smk -j {node*ntasks}')
+    with open(os.path.join(WORK_DIR, job_name,'snakemake', 'PMS.sh'), 'w') as file:
+        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}_PMS\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}PMS.smk -j {node*ntasks}')
+    with open(os.path.join(WORK_DIR, job_name,'snakemake', 'Supercharge.sh'), 'w') as file:
+        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}_Supercharge\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}Supercharge.smk -j {node*ntasks}')
+    with open(os.path.join(WORK_DIR, job_name,'snakemake', 'Supercharge_ref.sh'), 'w') as file:
+        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}_Supercharge_ref\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}Supercharge_ref.smk -j {node*ntasks}')
+    with open(os.path.join(WORK_DIR, job_name,'snakemake', 'RosettaVIP.sh'), 'w') as file:
+        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}_RosettaVIP\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}RosettaVIP.smk -j {node*ntasks}')
+    with open(os.path.join(WORK_DIR, job_name,'snakemake', 'Manual.sh'), 'w') as file:
+        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}_Manual\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}Manual.smk -j {node*ntasks}')
 
 
 if __name__ == '__main__':
-    WORK_DIR = '/share/home/cheny/Projects/stable_final'
-    BIN_DIR = '/share/home/cheny/Projects/stable_final/bin'
+    # WORK_DIR = '/share/home/cheny/Projects/stable_final'
+    # BIN_DIR = '/share/home/cheny/Projects/stable_final/bin'
+    WORK_DIR = str(os.getcwd())
+    BIN_DIR = str(os.path.join(WORK_DIR, 'bin'))
     parser = argparse.ArgumentParser()
     parser.add_argument('--job_name', type=str, help='job name')
     parser.add_argument('--input_file', type=str, help='PDB file to design')
