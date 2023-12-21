@@ -24,15 +24,20 @@ To get started with ProteinOpt, follow these steps:
    cd ProteinOpt
    ```
 3. Creat irtual environment and install the required dependencies:
+   
+   For the convenience of subsequent installation of related dependencies such as PyRosetta, we recommend using Python versions 3.6, 3.7, 3.8, and 3.9
    ```bash
-   conda create -n ProteinOpt python=3.10
+   conda create -n ProteinOpt python=3.9
    conda activate ProteinOpt
    pip install snakemake biopython pandas
    ```
-4. install Rosetta and PyRosetta 
-   You can obtain licenses for Rosetta and PyRosetta by visiting the official [Rosetta](https://www.rosettacommons.org/software/license-and-download) website. If you intend to install the Rosetta software suite on an HPC system, please contact your system administrator. For installation on Linux machines, you can follow the tutorials on the Rosetta official website or use the Dockerfile we provided. Please be aware that, before installation, it is necessary to modify the line 21 of the Dockerfile, replacing 'account' and 'password' with the Rosetta account and password you have obtained.
+4. Install Rosetta and PyRosetta
+   
+   For installation on Linux machines, you can follow the tutorials on the Rosetta official website or use the Dockerfile we provided. 
+   If you intend to install the Rosetta software suite on an HPC system, please contact your system administrator. 
+   Please be aware that, before installation, it is necessary to modify the line 21 of the Dockerfile, replacing 'account' and 'password' with the Rosetta account and password you have obtained. You can obtain licenses for Rosetta and PyRosetta by visiting the official [Rosetta](https://www.rosettacommons.org/software/license-and-download) website. 
 
-   Aftere installation, use the following command to configure the Rosetta environment variables.
+   After installation, use the following command to configure the Rosetta environment variables.
    ```bash
    export PATH=$PATH:/path/to/rosetta/source/bin
    export ROSETTA=$ROSETTA:/path/to/rosetta
