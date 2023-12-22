@@ -9,13 +9,10 @@ warnings.filterwarnings("ignore")
 def preparation(BIN_DIR, WORK_DIR, WORK_NAME, INPUT_FILE):
     if not os.path.exists(WORK_DIR):
         os.mkdir(WORK_DIR)
-    print(os.path.join(WORK_DIR, WORK_NAME))
     if not os.path.exists(os.path.join(WORK_DIR, WORK_NAME)):
         os.mkdir(os.path.join(WORK_DIR, WORK_NAME))
 
     os.mkdir(os.path.join(WORK_DIR, WORK_NAME, 'data'))
-    # os.mkdir(os.path.join(WORK_DIR, WORK_NAME, 'snakemake'))
-    # os.mkdir(os.path.join(WORK_DIR, WORK_NAME, 'utils'))
 
     shutil.copytree(os.path.join(BIN_DIR, 'snakemake'), os.path.join(WORK_DIR, WORK_NAME, 'snakemake'))
     shutil.copytree(os.path.join(BIN_DIR, 'utils'), os.path.join(WORK_DIR, WORK_NAME, 'utils'))
@@ -53,7 +50,6 @@ def read_pdb_para(input_file, target_chain):
     pdb_len = 0
     for i in all_pos:
         pdb_len += len(i)
-    # print(target_pos)
     return name, all_chains, other_chain, int(start_pos), int(end_pos), pdb_len
 
 def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER_CHAIN, DISTANCE, PDB_START, PDB_END, NODE, NTASKS, NUM, PDB_TOTAL, TARGET_METHOD, TARGET_CHARGE, TOP_PM_NUM, IN_SITE):
