@@ -1,3 +1,4 @@
+# relax option
 -relax:jump_move true
 -relax:bb_move true
 -relax:chi_move true

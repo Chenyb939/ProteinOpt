@@ -1,3 +1,4 @@
+# RosettaVIP option
 -ignore_unrecognized_res
 -cp:ncycles 4
 -cp:cutoff 7.0
