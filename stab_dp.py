@@ -94,10 +94,9 @@ def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER
     }
     with open(os.path.join(WORK_DIR, 'snakemake', 'config.yaml'), 'w') as file:
          yaml.dump(names, file, sort_keys=False)
-    # print(open('config.yml').read())
 
 def write_bash(WORK_DIR, job_name, node, ntasks):
-    SNAKE_dir = os.path.join(WORK_DIR, 'snakemake', '')
+    SNAKE_dir = os.path.join(WORK_DIR, job_name, 'snakemake', '')
     with open(os.path.join(WORK_DIR, job_name, 'snakemake', 'preprocess.sh'), 'w') as file:
         file.write(f'#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}_preprocess\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}preprocess.smk -j {node*ntasks}')
     with open(os.path.join(WORK_DIR, job_name,'snakemake', 'PMS.sh'), 'w') as file:
@@ -113,8 +112,7 @@ def write_bash(WORK_DIR, job_name, node, ntasks):
 
 
 if __name__ == '__main__':
-    # WORK_DIR = '/share/home/cheny/Projects/stable_final'
-    # BIN_DIR = '/share/home/cheny/Projects/stable_final/bin'
+
     WORK_DIR = str(os.getcwd())
     BIN_DIR = str(os.path.join(WORK_DIR, 'bin'))
     parser = argparse.ArgumentParser()
