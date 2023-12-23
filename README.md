@@ -129,7 +129,7 @@ To utilize ProteinOpt effectively, follow these steps:
 
    To generate a summary file of the analysis results, please run the following command in your terminal:
    ```bash
-   python analy.py
+   python analyse.py
    ```
 
 ## Contributions
