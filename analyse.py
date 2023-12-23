@@ -172,14 +172,15 @@ if __name__ == '__main__':
     # draw num pic
     key = num_dict.keys()
     value = num_dict.values()
+    weight = len(key)
 
     df = pd.DataFrame()
     df['mutated_site'] = key
     df['count'] =  value
-    plt.figure(figsize=(10, 5))
+    plt.figure(figsize=(weight, weight/2))
     sns.set_theme(style = 'whitegrid')
     sns.set_color_codes("muted")
-    p1 = sns.barplot( data=df, x='mutated_site', y='count')
+    p1 = sns.barplot(data=df, x='mutated_site', y='count')
     # plt.bar_label(p1.containers[0])
     plt.savefig(os.path.join(out_dir, 'num.png'))
 
@@ -187,23 +188,25 @@ if __name__ == '__main__':
     df = pd.DataFrame()
     df['mutated_site'] = dnum
     df['score'] = score
+
     plt.figure(figsize=(10, 6))
     sns.set_theme(style = 'whitegrid')
     sns.set_color_codes("muted")
     p1 = sns.boxplot(data=df, x='mutated_site', y='score')
     plt.savefig(os.path.join(out_dir, 'score.png'))
 
-
-
     #draw site type
     key = site_dict.keys()
     value = site_dict.values()
+    weight = len(key)
+    if weight > 50:
+        weight = 50
 
     df = pd.DataFrame()
     df['mutate'] = key
     df['count'] =  value
 
-    plt.figure(figsize=(30, 18))
+    plt.figure(figsize=(weight/2, weight/4))
     sns.set_theme(style = 'whitegrid')
     sns.set_color_codes("muted")
     p1 = sns.barplot(data=df, x='mutate', y='count')
@@ -211,17 +214,18 @@ if __name__ == '__main__':
     plt.bar_label(p1.containers[0])
     plt.savefig(os.path.join(out_dir, 'mut_type.png'))
 
-
-
     #draw site pic
     key = new_dict.keys()
     value = new_dict.values()
-
+    weight = len(key)
+    if weight > 50:
+        weight = 50
+        
     df = pd.DataFrame()
     df['mutate'] = key
     df['count'] =  value
 
-    plt.figure(figsize=(10, 5))
+    plt.figure(figsize=(weight/2, weight/4))
     sns.set_theme(style = 'whitegrid')
     sns.set_color_codes("muted")
     p1 = sns.barplot(data=df, x='mutate', y='count')
