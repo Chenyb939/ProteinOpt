@@ -1,23 +1,12 @@
 import os
 from Bio import PDB
 import pandas as pd
+import matplotlib.pylab as plt
+import seaborn as sns
 import warnings
+import argparse
 warnings.filterwarnings("ignore")
 
-# output dir
-
-out_dir = '/share/home/cheny/Projects/stable_final/6m0j/output/run4/'
-# out_dir = '/share/home/cheny/Projects/stable_final/6m0j/result/Super42'
-# out_dir = '/share/home/cheny/Projects/stable_final/6m0j/result/PM'
-# relax result dir 
-relax_dir = '/share/home/cheny/Projects/stable_final/6m0j/output/run4/data/Relaxed_WT/'
-# com result dir
-mc_dir = '/share/home/cheny/Projects/stable_final/6m0j/output/run4/data/Com_PM_41/'
-# mut number for DMS
-mut_nums = 0
-# mut site for DMS
-# mut_site = ['166E']
-mut_site = []
 
 def get_seq(pdb):
     name = pdb.split('/')[-1][:4]
@@ -68,35 +57,6 @@ def get_raw_score(path):
         line = lines[2]
         score = float(line[9:18])
     return score
-# generate csv result
-
-
-# relax result dir 
-raw_path = relax_dir
-# com result dir
-path = mc_dir
-
-ene = get_raw_score(raw_path)
-# raw_fa = get_seq(os.path.join(raw_path, '6m0j_final_Relaxed.pdb'))
-raw_fa = get_seq(os.path.join(raw_path, '6m0j_Relaxed.pdb'))
-score_lst, name_lst, seq_lst, mut_lst, num_lst, path_lst = get_score(path, raw_fa)
-print('read relax down')
-d_score_lst = []
-for score in score_lst:
-    d_score_lst.append(score-ene)
-df = pd.DataFrame({'name': name_lst, 'score': score_lst, 'mut': mut_lst, 'mut_num': num_lst, 'dds': d_score_lst, 'seq': seq_lst, 'path_lst': path_lst})
-df.to_csv(os.path.join(out_dir, 'result.csv'), index=False)
-
-
-import pandas as pd
-import matplotlib.pylab as plt
-import seaborn as sns
-
-sns.distplot
-# mut_nums = 1
-# mut_site = ['166E']
-df = pd.read_csv(os.path.join(out_dir, 'result.csv'))
-df = df.sort_values('score', ascending=True)
 
 def get_dmut(muts, mut_lst):
     for mut in mut_lst:
@@ -104,18 +64,6 @@ def get_dmut(muts, mut_lst):
     return muts[:-1]
 def get_dmun(nums, mut_num):
     return int(nums-mut_num)
-
-
-df['dmut']=df.apply(lambda x: get_dmut(x['mut'], mut_site), axis=1)
-df['dnum']=df.apply(lambda x: get_dmun(x['mut_num'], mut_nums), axis=1)
-dnum = list(df['dnum'])
-dmut = list(df['dmut'])
-score = list(df['score'])
-df.to_csv(os.path.join(out_dir, 'umut_reslt.csv'), index=False)
-
-
-sns.distplot(df['score'], rug=False, hist=True)
-plt.savefig(os.path.join(out_dir, 'score.png'))
 
 def draw_mut(dnum):
     nums_lst = []
@@ -162,67 +110,121 @@ def draw_count_site(dmut):
     return site_dict, new_dict
 
 
-site_dict, new_dict = draw_count_site(dmut)
+def generate_csv(raw_path, file_name, path):
+    # generate csv result
+    ene = get_raw_score(raw_path)
+    raw_fa = get_seq(os.path.join(raw_path, file_name))
+    score_lst, name_lst, seq_lst, mut_lst, num_lst, path_lst = get_score(path, raw_fa)
+    print('read relax down')
+    d_score_lst = []
+    for score in score_lst:
+        d_score_lst.append(score-ene)
+    df = pd.DataFrame({'name': name_lst, 'score': score_lst, 'mut': mut_lst, 'mut_num': num_lst, 'dds': d_score_lst, 'seq': seq_lst, 'path_lst': path_lst})
+    df.to_csv(os.path.join(out_dir, 'result.csv'), index=False)
+    return df
 
-num_dict = draw_mut(dnum)
-print("mut site num and num", num_dict)
 
-# draw num pic
-key = num_dict.keys()
-value = num_dict.values()
+if __name__ == '__main__':
 
-df = pd.DataFrame()
-df['mutated_site'] = key
-df['count'] =  value
-# plt.figure(1)
-plt.figure(figsize=(10, 5))
-# plt.subplot(211)
-sns.set_theme(style = 'whitegrid')
-sns.set_color_codes("muted")
-p1 = sns.barplot( data=df, x='mutated_site', y='count')
-# plt.bar_label(p1.containers[0])
-plt.savefig(os.path.join(out_dir, 'num_count.png'))
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--relaxed_path', type=str, help='The input file after relax')
+    parser.add_argument('--Opt_dir', type=str, help='ProteinOpt optimized path')
+    parser.add_argument('--Out_dir', type=str, help='Output path for analysis results')
+    parser.add_argument('--mut_sites', type=str, default='None', help='Manually specified mutation sites if using the manual method')
+    args = parser.parse_args()
+    
+    try:
+        mut_site = args.mut_sites.split(',')
+        mut_nums = len(mut_site)
+    except:
+        mut_site = []
+        mut_nums = 0
 
-# draw score pic
-df = pd.DataFrame()
-df['mutated_site'] = dnum
-df['score'] = score
-# plt.figure(2)
-plt.figure(figsize=(10, 6))
-# plt.subplot(212)
-sns.set_theme(style = 'whitegrid')
-sns.set_color_codes("muted")
-p1 = sns.boxplot(data=df, x='mutated_site', y='score')
-plt.savefig(os.path.join(out_dir, 'score_count.png'))
+    raw_path = args.relaxed_path
+    path = args.Opt_dir
+    out_dir = args.Out_dir
 
-#draw site pic
-key = site_dict.keys()
-value = site_dict.values()
+    file_names = os.listdir(raw_path)
+    file_name = [file for file in file_names if file.endswith('_Relaxed.pdb')][0]
 
-df = pd.DataFrame()
-df['mutate'] = key
-df['count'] =  value
+    df = generate_csv(raw_path, file_name, path)
 
-plt.figure(figsize=(30, 18))
-sns.set_theme(style = 'whitegrid')
-sns.set_color_codes("muted")
-p1 = sns.barplot(data=df, x='mutate', y='count')
-plt.xticks(rotation=90)
-plt.bar_label(p1.containers[0])
-plt.savefig(os.path.join(out_dir, 'mut_type.png'))
+    # sns.distplot
+    df = pd.read_csv(os.path.join(out_dir, 'result.csv'))
+    df = df.sort_values('score', ascending=True)
 
-#draw site pic
-key = new_dict.keys()
-value = new_dict.values()
+    df['dmut']=df.apply(lambda x: get_dmut(x['mut'], mut_site), axis=1)
+    df['dnum']=df.apply(lambda x: get_dmun(x['mut_num'], mut_nums), axis=1)
+    dnum = list(df['dnum'])
+    dmut = list(df['dmut'])
+    score = list(df['score'])
+    df.to_csv(os.path.join(out_dir, 'mut_reslt.csv'), index=False)
 
-df = pd.DataFrame()
-df['mutate'] = key
-df['count'] =  value
 
-plt.figure(figsize=(10, 5))
-sns.set_theme(style = 'whitegrid')
-sns.set_color_codes("muted")
-p1 = sns.barplot(data=df, x='mutate', y='count')
-# plt.xticks(rotation=30)
-plt.bar_label(p1.containers[0])
-plt.savefig(os.path.join(out_dir, 'mut_site.png'))
+    sns.distplot(df['score'], rug=False, hist=True)
+    plt.savefig(os.path.join(out_dir, 'score.png'))
+
+    site_dict, new_dict = draw_count_site(dmut)
+
+    num_dict = draw_mut(dnum)
+    print("mut site num and num", num_dict)
+
+    # draw num pic
+    key = num_dict.keys()
+    value = num_dict.values()
+
+    df = pd.DataFrame()
+    df['mutated_site'] = key
+    df['count'] =  value
+    plt.figure(figsize=(10, 5))
+    sns.set_theme(style = 'whitegrid')
+    sns.set_color_codes("muted")
+    p1 = sns.barplot( data=df, x='mutated_site', y='count')
+    # plt.bar_label(p1.containers[0])
+    plt.savefig(os.path.join(out_dir, 'num.png'))
+
+    # draw score pic
+    df = pd.DataFrame()
+    df['mutated_site'] = dnum
+    df['score'] = score
+    plt.figure(figsize=(10, 6))
+    sns.set_theme(style = 'whitegrid')
+    sns.set_color_codes("muted")
+    p1 = sns.boxplot(data=df, x='mutated_site', y='score')
+    plt.savefig(os.path.join(out_dir, 'score.png'))
+
+
+
+    #draw site type
+    key = site_dict.keys()
+    value = site_dict.values()
+
+    df = pd.DataFrame()
+    df['mutate'] = key
+    df['count'] =  value
+
+    plt.figure(figsize=(30, 18))
+    sns.set_theme(style = 'whitegrid')
+    sns.set_color_codes("muted")
+    p1 = sns.barplot(data=df, x='mutate', y='count')
+    plt.xticks(rotation=90)
+    plt.bar_label(p1.containers[0])
+    plt.savefig(os.path.join(out_dir, 'mut_type.png'))
+
+
+
+    #draw site pic
+    key = new_dict.keys()
+    value = new_dict.values()
+
+    df = pd.DataFrame()
+    df['mutate'] = key
+    df['count'] =  value
+
+    plt.figure(figsize=(10, 5))
+    sns.set_theme(style = 'whitegrid')
+    sns.set_color_codes("muted")
+    p1 = sns.barplot(data=df, x='mutate', y='count')
+    # plt.xticks(rotation=30)
+    plt.bar_label(p1.containers[0])
+    plt.savefig(os.path.join(out_dir, 'mut_site.png'))
