@@ -123,14 +123,55 @@ To utilize ProteinOpt effectively, follow these steps:
    bash ./[job_name]/snakemake/Manual.sh
    ```
 
+   After optimizing the input protein, ProteinOpt automatically creates a folder named after the task within the output path. The file structure is as follows:
+
+   ``` 
+   [job_name]
+   │
+   ├── utils                       Script used during runtime
+   │   ├── VIP             
+   │   ├── Supercharge     
+   │   ├── relax           
+   │   ├── PM              
+   │   └── mutate          
+   │
+   ├── sankemake                   Files used during optimization
+   │
+   ├── output
+   │   ├── utils                   Script generated during runtime
+   │   └── data                    The output files during the optimization
+   │       ├── WT                  The input PDB file
+   │       ├── Supercharge         The Supercharge script result 
+   │       ├── Relaxed_WT          The relax result of input PDB file
+   │       ├── PM                  The Single-point mutation scanning result
+   │       ├── Mutated             The mutated file after find seed residues
+   │       ├── Mutated_Relaxed     The relax result of mutated file
+   │       ├── Com_PM_VIP          The RosettaVIP protocol results
+   │       ├── Com_PM_PM           The PMS protocol results
+   │       ├── Com_PM_DMS          The Manual protocol results
+   │       ├── Com_PM_41           The supercharge protocol results
+   │       ├── Com_PM_42           The supercharge protocol (ues reference) results
+   │       └── Cleaned_WT          The cleaned input file
+   │
+   └── data                        The input PDB file
+   ```
+
 4. Check the optimization results.
    
-   Check the optimization results in the `./[job_name]/output/data` folder.
+   After optimization, you can check the optimization results in the `./[job_name]/output/data` folder.
 
    To generate a summary file of the analysis results, please run the following command in your terminal:
+
    ```bash
-   python analyse.py
+   usage: python analyse.py [--relaxed_path] [--Opt_dir] [--Out_dir] [--mut_sites]
+
+   optional arguments:
+      --relaxed_path          The input file after relax
+      --Opt_dir               ProteinOpt optimized path
+      --Out_dir               Output path for analysis results
+      --mut_sites             Manually specified mutation sites (if use manual protocol)
    ```
+
 
 ## Contributions
 

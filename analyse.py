@@ -130,7 +130,7 @@ if __name__ == '__main__':
     parser.add_argument('--relaxed_path', type=str, help='The input file after relax')
     parser.add_argument('--Opt_dir', type=str, help='ProteinOpt optimized path')
     parser.add_argument('--Out_dir', type=str, help='Output path for analysis results')
-    parser.add_argument('--mut_sites', type=str, default='None', help='Manually specified mutation sites if using the manual method')
+    parser.add_argument('--mut_sites', type=str, default='None', help='Manually specified mutation sites if using the manual protocol')
     args = parser.parse_args()
     
     try:
