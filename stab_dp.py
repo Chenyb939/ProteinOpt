@@ -113,9 +113,6 @@ def write_bash(WORK_DIR, job_name, node, ntasks):
 
 
 if __name__ == '__main__':
-
-    WORK_DIR = str(os.getcwd())
-    BIN_DIR = str(os.path.join(WORK_DIR, 'bin'))
     parser = argparse.ArgumentParser()
     parser.add_argument('--job_name', type=str, help='job name')
     parser.add_argument('--input_file', type=str, help='PDB file to design')
@@ -129,10 +126,18 @@ if __name__ == '__main__':
     parser.add_argument('--top_pm_num', type=int, default=10, help='number of point mutation selected')
     parser.add_argument('--in_site', type=str, default='1F,52I', help='location of mutation point, such as "1F,52I"')
     parser.add_argument('--Rosetta_dir', type=str, help='Path to the ROSETTA software')
+    parser.add_argument('--output_dir', type=str, default='./', help='Output File Directory')
+    parser.add_argument('--proteinopt_bin', type=str, default='./', help='The bin directory of ProteinOpt')
     args = parser.parse_args()
 
     assert args.super_method in ['atom', 'residue'] , 'super_method should be atom or residue'
     assert args.super_target in ['positive', 'negative'] , 'super_method should be positive or negative'
+
+    # WORK_DIR = str(os.getcwd())
+    # BIN_DIR = str(os.path.join(WORK_DIR, 'bin'))
+
+    WORK_DIR = args.output_dir
+    BIN_DIR = args.proteinopt_bin
 
     preparation(BIN_DIR, WORK_DIR, args.job_name, args.input_file)
     wt_name, all_chains, other_chain, start_pos, end_pos, pdb_total = read_pdb_para(os.path.join(WORK_DIR, args.job_name, 'data', os.path.basename(args.input_file)), args.target_chain)
