@@ -1,3 +1,5 @@
+configfile: 'config.yaml'
+
 ## Required paths
 ROSETTA = config['ROSETTA']
 ROSETTA_BIN = config['ROSETTA_BIN']

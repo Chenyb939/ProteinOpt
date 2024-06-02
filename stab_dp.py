@@ -128,7 +128,7 @@ if __name__ == '__main__':
     parser.add_argument('--super_target', type=str, default='positive', help='supercharge target if use')
     parser.add_argument('--top_pm_num', type=int, default=10, help='number of point mutation selected')
     parser.add_argument('--in_site', type=str, default='1F,52I', help='location of mutation point, such as "1F,52I"')
-    parser.add_argument('--Rosetta_dir', type=str, help='Rosetta dir')
+    parser.add_argument('--Rosetta_dir', type=str, help='Path to the ROSETTA software')
     args = parser.parse_args()
 
     assert args.super_method in ['atom', 'residue'] , 'super_method should be atom or residue'
