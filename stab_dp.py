@@ -52,19 +52,20 @@ def read_pdb_para(input_file, target_chain):
         pdb_len += len(i)
     return name, all_chains, other_chain, int(start_pos), int(end_pos), pdb_len
 
-def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER_CHAIN, DISTANCE, PDB_START, PDB_END, NODE, NTASKS, NUM, PDB_TOTAL, TARGET_METHOD, TARGET_CHARGE, TOP_PM_NUM, IN_SITE):
+def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER_CHAIN, DISTANCE, PDB_START, PDB_END, NODE, NTASKS, NUM, PDB_TOTAL, TARGET_METHOD, TARGET_CHARGE, TOP_PM_NUM, IN_SITE, Rosetta):
     WORK_DIR = os.path.join(WORK_DIR, WORK_NAME)
     INPUT_DIR = os.path.join(WORK_DIR, 'data')
     OUTPUT_DIR = os.path.join(WORK_DIR, 'output')
     UTILS_PATH = os.path.join(WORK_DIR, 'utils')
     DATA_PATH = os.path.join(OUTPUT_DIR, 'data')
     RUN_FILE = os.path.join(OUTPUT_DIR, 'utils')
+    Rosetta_bin = os.path.join(Rosetta, 'bin')
     PYTHON_PATH = os.popen('which python').readlines()[0].replace('\n', '')
     RUN_DIR = os.popen('pwd').readlines()[0].replace('\n', '')
     THREADS = NODE * NTASKS
     names = {
-    'ROSETTA': '$ROSETTA',
-    'ROSETTA_BIN': '$ROSETTA_BIN',
+    'ROSETTA': Rosetta,
+    'ROSETTA_BIN': Rosetta_bin,
     'WORK_NAME': WORK_NAME,
     'WT_NAME': WT_NAME,
     'WORK_DIR': WORK_DIR,
@@ -120,13 +121,14 @@ if __name__ == '__main__':
     parser.add_argument('--input_file', type=str, help='PDB file to design')
     parser.add_argument('--target_chain', type=str, help='chain to design')
     parser.add_argument('--distance', type=int, default=7, help='distance around site')
-    parser.add_argument('--node', type=int, default=8, help='nodes use in HPC')
-    parser.add_argument('--ntasks', type=int, default=32, help='ntasks use in each node')
-    parser.add_argument('--num', type=int, default=1, help='number of generated PDBs')
+    parser.add_argument('--node', type=int, default=1, help='nodes use in HPC')
+    parser.add_argument('--ntasks', type=int, default=8, help='ntasks use in each node')
+    parser.add_argument('--num', type=int, default=10, help='number of generated PDBs')
     parser.add_argument('--super_method', type=str, default='residue', help='supercharge methods if use')  
     parser.add_argument('--super_target', type=str, default='positive', help='supercharge target if use')
     parser.add_argument('--top_pm_num', type=int, default=10, help='number of point mutation selected')
     parser.add_argument('--in_site', type=str, default='1F,52I', help='location of mutation point, such as "1F,52I"')
+    parser.add_argument('--Rosetta_dir', type=str, help='Rosetta dir')
     args = parser.parse_args()
 
     assert args.super_method in ['atom', 'residue'] , 'super_method should be atom or residue'
@@ -134,7 +136,7 @@ if __name__ == '__main__':
 
     preparation(BIN_DIR, WORK_DIR, args.job_name, args.input_file)
     wt_name, all_chains, other_chain, start_pos, end_pos, pdb_total = read_pdb_para(os.path.join(WORK_DIR, args.job_name, 'data', os.path.basename(args.input_file)), args.target_chain)
-    write_config(args.job_name, wt_name, WORK_DIR, all_chains, args.target_chain, other_chain,args.distance, start_pos, end_pos, args.node, args.ntasks, args.num, pdb_total, args.super_method, args.super_target, args.top_pm_num, args.in_site)
+    write_config(args.job_name, wt_name, WORK_DIR, all_chains, args.target_chain, other_chain,args.distance, start_pos, end_pos, args.node, args.ntasks, args.num, pdb_total, args.super_method, args.super_target, args.top_pm_num, args.in_site, args.Rosetta_dir)
     write_bash(WORK_DIR, args.job_name, args.node, args.ntasks)
     # order
     # python stab_dp.py --job_name 6m0j --input_file /share/home/cheny/Projects/stable_final/test/data/6m0j.pdb --target_chain E --distance 7 --num 100 --in_site 498R

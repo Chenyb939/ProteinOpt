@@ -11,6 +11,8 @@ ProteinOpt is a multi-objective optimization tool specifically designed for vacc
    
 4. **Manually Specified Seed Residues**: Manually Specified Seed Residuescan can be selected based on experimental records and literature references to determine the amino acids that need to be mutated. ProteinOpt can utilize these residues for multi-point mutation methods to discover the most stable protein conformation.
 
+
+
 ## Installation
 
 To get started with ProteinOpt, follow these steps:
@@ -45,6 +47,10 @@ To get started with ProteinOpt, follow these steps:
    ```
    
 ## How to Use
+For command-line execution, please follow the instructions in this document.  
+For GUI users, access the [GUI Manual](gui/README.md).   
+Web interface users should refer to the [Web Manual](web/README.md).
+
 
 ProteinOpt can be thought of as a two-step pipeline. In the initial step, users can utilize three classic Rosetta protocols to find seed residue(s), including point mutation scanning, RosettaVIP (Void Identification and Packing), and Supercharge. Besides, users can also manually specify seed residue(s) as input. In the second step, ProteinOpt applies the mutation cluster protocol to further refine the conformation of the protein. 
 
@@ -53,7 +59,7 @@ To utilize ProteinOpt effectively, follow these steps:
    Start by running the `stab_dp.py` script. This script is responsible for processing input files and generating the necessary files required for running.
    
    ```bash
-   usage: python stab_dp.py [--job_name] [--input_file] [--target_chain] [--node] [--ntasks] [--num] [--top_pm_num] [--in_site] [--super_method] [--super_target]
+   usage: python stab_dp.py [--job_name] [--input_file] [--target_chain] [--node] [--ntasks] [--num] [--top_pm_num] [--in_site] [--super_method] [--super_target] [--Rosetta_dir]
 
    optional arguments:
       --job_name              Task Name
@@ -66,6 +72,7 @@ To utilize ProteinOpt effectively, follow these steps:
       --in_site               Documented mutation sites (if use Mutation Cluster protocol; default: 498R)
       --super_method          Supercharge methods (if use Supercharge protocol; default: residue)
       --super_target          Supercharge target (if use Supercharge protocol; default: positive)
+      --Rosetta_dir           Path to the ROSETTA software
    ```
 2. Check optimization configurations
    After running, you can open the `./[job_name]/config.yaml` file to view and modify the required configurations.
