@@ -1,0 +1,12 @@
+# relax option
+-relax:jump_move true
+-relax:bb_move true
+-relax:chi_move true
+-relax:dualspace true
+-relax::minimize_bond_angles
+-relax:default_repeats 15
+-score:weights ref2015
+-score:set_weights pro_close 0
+-score:set_weights cart_bonded 0.5
+
+-nstruct 1

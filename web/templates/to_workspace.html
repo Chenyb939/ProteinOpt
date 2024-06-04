@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var uuid = localStorage.getItem('UserID');
+            if (uuid) {
+                // 使用 AJAX 发送 uuid 到后端
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/MyWorkspace', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText);
+                        document.getElementById('user-content').innerHTML = data.htmlContent;
+                    }
+                };
+                xhr.send(JSON.stringify({ uuid: uuid }));
+            }
+        });
+    </script>
+</head>
+<body>
+    <div id="user-content">
+        <!-- 用户信息将通过 AJAX 请求渲染在这里 -->
+    </div>
+</body>
+</html>

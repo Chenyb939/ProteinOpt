@@ -1,0 +1,311 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>Submit_VIP</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <link href="static/resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
+    <link href="static/data/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="static/files/submit_vip/styles.css" type="text/css" rel="stylesheet"/>
+    <script src="static/resources/scripts/jquery-3.2.1.min.js"></script>
+    <script src="static/resources/scripts/axure/axQuery.js"></script>
+    <script src="static/resources/scripts/axure/globals.js"></script>
+    <script src="static/resources/scripts/axutils.js"></script>
+    <script src="static/resources/scripts/axure/annotation.js"></script>
+    <script src="static/resources/scripts/axure/axQuery.std.js"></script>
+    <script src="static/resources/scripts/axure/doc.js"></script>
+    <script src="static/resources/scripts/messagecenter.js"></script>
+    <script src="static/resources/scripts/axure/events.js"></script>
+    <script src="static/resources/scripts/axure/recording.js"></script>
+    <script src="static/resources/scripts/axure/action.js"></script>
+    <script src="static/resources/scripts/axure/expr.js"></script>
+    <script src="static/resources/scripts/axure/geometry.js"></script>
+    <script src="static/resources/scripts/axure/flyout.js"></script>
+    <script src="static/resources/scripts/axure/model.js"></script>
+    <script src="static/resources/scripts/axure/repeater.js"></script>
+    <script src="static/resources/scripts/axure/sto.js"></script>
+    <script src="static/resources/scripts/axure/utils.temp.js"></script>
+    <script src="static/resources/scripts/axure/variables.js"></script>
+    <script src="static/resources/scripts/axure/drag.js"></script>
+    <script src="static/resources/scripts/axure/move.js"></script>
+    <script src="static/resources/scripts/axure/visibility.js"></script>
+    <script src="static/resources/scripts/axure/style.js"></script>
+    <script src="static/resources/scripts/axure/adaptive.js"></script>
+    <script src="static/resources/scripts/axure/tree.js"></script>
+    <script src="static/resources/scripts/axure/init.temp.js"></script>
+    <script src="static/resources/scripts/axure/legacy.js"></script>
+    <script src="static/resources/scripts/axure/viewer.js"></script>
+    <script src="static/resources/scripts/axure/math.js"></script>
+    <script src="static/resources/scripts/axure/jquery.nicescroll.min.js"></script>
+    <script src="static/data/document.js"></script>
+    <script src="static/files/submit_vip/data.js"></script>
+    <script type="text/javascript">
+      $axure.utils.getTransparentGifPath = function() { return 'resources/images/transparent.gif'; };
+      $axure.utils.getOtherPath = function() { return 'resources/Other.html'; };
+      $axure.utils.getReloadPath = function() { return 'resources/reload.html'; };
+    </script>
+      <style>
+        a{
+          text-decoration: none;
+        }
+        button[type="submit"] {
+          background-color: transparent;
+          border: none; /* 如果你想要同时去除边框 */
+          cursor: pointer; /* 鼠标悬停时显示手形图标，表示这是一个可点击的按钮 */
+          font-size:16px;
+          color: #FFFFFF;
+        }
+    </style>
+  </head>
+  <body>
+
+    <script>
+         // 页面加载完成后执行的 JavaScript 代码
+        window.onload = function() {
+            let localStorageDataInput = document.getElementById('localStorageData');
+
+            // 从 localStorage 中读取数据并设置到隐藏的表单字段中
+            let storedData = localStorage.getItem('UserID');
+            if (storedData) {
+                localStorageDataInput.value = storedData;
+            }
+        };
+
+    </script>
+
+    <div id="base" class="">
+
+      <!-- Unnamed (占位符) -->
+      <div id="u379" class="ax_default placeholder">
+        <img id="u750_img" class="img " src="static/images/submit/opt2.png"/>
+      </div>
+
+      <!-- Unnamed (动态面板) -->
+      <div id="u380" class="ax_default">
+        <div id="u380_state0" class="panel_state" data-label="Home" style="">
+          <div id="u380_state0_content" class="panel_state_content">
+
+            <!-- Unnamed (矩形) -->
+            <div id="u381" class="ax_default box_1">
+              <div id="u381_div" class=""></div>
+              <div id="u381_text" class="text " style="display:none; visibility: hidden">
+                <p></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (矩形) -->
+            <div id="u382" class="ax_default label">
+              <div id="u382_div" class=""></div>
+              <div id="u382_text" class="text ">
+                <p><a href="/"><span>Home</span></a></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (矩形) -->
+            <div id="u383" class="ax_default _文本段落">
+              <div id="u383_div" class=""></div>
+              <div id="u383_text" class="text ">
+                <p><a href="/about"><span>About</span></a></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (矩形) -->
+            <div id="u384" class="ax_default _文本段落">
+              <div id="u384_div" class=""></div>
+              <div id="u384_text" class="text ">
+                <p><span><a href="/help">Help</a></span></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (矩形) -->
+            <div id="u385" class="ax_default _文本段落">
+              <div id="u385_div" class=""></div>
+              <div id="u385_text" class="text ">
+                <p><a href="/example"><span>Example</span></a></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (矩形) -->
+            <div id="u388" class="ax_default _文本段落">
+              <div id="u388_div" class=""></div>
+              <div id="u388_text" class="text ">
+                <p><a href="/toMyWorkspace"><span>Workspace</span></a></p>
+              </div>
+            </div>
+
+            <!-- Unnamed (矩形) -->
+            <div id="u389" class="ax_default label">
+              <div id="u389_div" class=""></div>
+              <div id="u389_text" class="text ">
+                <p><a href="/contact"><span>Contact</span></a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u453" class="ax_default box_1">
+        <img id="u453_img" class="img " src="static/images/home/u75.svg"/>
+        <div id="u453_text" class="text ">
+          <p><span style="color:rgba(255, 255, 255, 0.8);">&nbsp;&nbsp;&nbsp; </span><span style="color:rgba(255, 255, 255, 0.996078431372549);">ProteinOpt: Protein Stability Optimization Tool</span></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u454" class="ax_default flow_shape1">
+        <div id="u454_div" class=""></div>
+        <div id="u454_text" class="text ">
+          <p style="color:#C0C0C0;"><a href="/pm"><span>Point Mutation Scanning</span></a></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u455" class="ax_default flow_shape1">
+        <div id="u455_div" class=""></div>
+        <div id="u455_text" class="text ">
+          <p><a href="/vip"><span>RosettaVIP</span></a></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u456" class="ax_default flow_shape1">
+        <div id="u456_div" class=""></div>
+        <div id="u456_text" class="text ">
+          <p style="color:#C0C0C0;"><a href="/charge"><span>Supercharge</span></a></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u457" class="ax_default flow_shape1">
+        <div id="u457_div" class=""></div>
+        <div id="u457_text" class="text ">
+          <p style="color:#C0C0C0;"><a href="/manally"><span>Manually Specified</span></a></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u458" class="ax_default flow_shape1">
+        <div id="u458_div" class=""></div>
+        <div id="u458_text" class="text " style="display:none; visibility: hidden">
+          <p></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u459" class="ax_default label">
+        <div id="u459_div" class=""></div>
+        <div id="u459_text" class="text ">
+          <p><span>Job Name</span></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u460" class="ax_default label">
+        <div id="u460_div" class=""></div>
+        <div id="u460_text" class="text ">
+          <p><span>PDB structure to submit</span></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u461" class="ax_default label">
+        <div id="u461_div" class=""></div>
+        <div id="u461_text" class="text ">
+          <p><span>The chain to be optimized</span></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u462" class="ax_default label">
+        <div id="u462_div" class=""></div>
+        <div id="u462_text" class="text ">
+          <p><span>The number of threads</span></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u463" class="ax_default label">
+        <div id="u463_div" class=""></div>
+        <div id="u463_text" class="text ">
+          <p><span>The number of optimization results</span></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (线段) -->
+      <div id="u464" class="ax_default _线段">
+        <img id="u464_img" class="img " src="static/images/submit_vip/u464.svg"/>
+        <div id="u464_text" class="text " style="display:none; visibility: hidden">
+          <p></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u465" class="ax_default label">
+        <div id="u465_div" class=""></div>
+        <div id="u465_text" class="text ">
+          <p><span>Files in PDB format only</span></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u466" class="ax_default label">
+        <div id="u466_div" class=""></div>
+        <div id="u466_text" class="text ">
+          <p><span>Number of cores used at runtime</span></p>
+        </div>
+      </div>
+
+      <!-- Unnamed (矩形) -->
+      <div id="u467" class="ax_default flow_shape1">
+        <div id="u467_div" class=""></div>
+        <div id="u467_text" class="text ">
+          <p><span>Clear</span></p>
+        </div>
+      </div>
+
+        <form id="myForm" method="post" action="/workspace" enctype="multipart/form-data">
+          <input type="hidden" id="localStorageData" name="localStorageData" required>
+          <input type="hidden" id="task" name="task" value="vip" required>
+          <!-- Unnamed (矩形) -->
+          <div id="u468" class="ax_default flow_shape1">
+            <div id="u468_div" class=""></div>
+            <div id="u468_text" class="text ">
+              <p><button type="submit">Submit</button></p>
+            </div>
+          </div>
+
+          <!-- result_num (文本框) -->
+          <div id="u469" class="ax_default text_field" data-label="result_num">
+            <div id="u469_div" class=""></div>
+            <input id="u469_input" type="text" value="" class="u469_input" name="results_number" required>
+          </div>
+
+          <!-- threads (文本框) -->
+          <div id="u470" class="ax_default text_field" data-label="threads">
+            <div id="u470_div" class=""></div>
+            <input id="u470_input" type="text" value="" class="u470_input" name="threads_number" required>
+          </div>
+
+          <!-- opt_chain (文本框) -->
+          <div id="u471" class="ax_default text_field" data-label="opt_chain">
+            <div id="u471_div" class=""></div>
+            <input id="u471_input" type="text" value="" class="u471_input" name="chain" required>
+          </div>
+
+          <!-- pdb_file (文本框) -->
+          <div id="u472" class="ax_default text_field" data-label="pdb_file">
+            <div id="u472_div" class=""></div>
+            <input id="u472_input" type="file" value="select file" class="u472_input" name="pdb_file" accept=".pdb" required>
+          </div>
+
+          <!-- job_name (文本框) -->
+          <div id="u473" class="ax_default text_field" data-label="job_name">
+            <div id="u473_div" class=""></div>
+            <input id="u473_input" type="text" value="" class="u473_input" name="job_name" required>
+          </div>
+        </form>
+    </div>
+    <script src="static/resources/scripts/axure/ios.js"></script>
+  </body>
+</html>

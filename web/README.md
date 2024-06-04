@@ -58,18 +58,24 @@ python_dir = /path/to/your/python
 #### Step 4: Start the Service
 With the environment activated and the configuration set, you can now start the ProteinOpt service. Use the following command:
 
+* Initialize the database and create a task table
 ``` bash
 flask db init
 flask db migrate
 flask db upgrade
+```
+* Deploy web pages
+```
 screen -S web
 conda activate Proteinopt_web
 python app.py
+```
+* Deploy background services
+```
 screen -S opt
 conda activate Proteinopt_web
 python process.py
 ```
-This command will initiate the ProteinOpt backend services required for operation.
 
 ### Output files
    The downloaded ProteinOpt result package has the following folder structure:
