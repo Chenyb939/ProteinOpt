@@ -52,7 +52,7 @@ def read_pdb_para(input_file, target_chain):
         pdb_len += len(i)
     return name, all_chains, other_chain, int(start_pos), int(end_pos), pdb_len
 
-def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER_CHAIN, DISTANCE, PDB_START, PDB_END, NODE, NTASKS, NUM, PDB_TOTAL, TARGET_METHOD, TARGET_CHARGE, TOP_PM_NUM, IN_SITE, Rosetta):
+def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER_CHAIN, DISTANCE, PDB_START, PDB_END, NODE, NTASKS, NUM, PDB_TOTAL, TARGET_METHOD, TARGET_CHARGE, TOP_PM_NUM, IN_SITE, Rosetta, PYTHON_PATH):
     WORK_DIR = os.path.join(WORK_DIR, WORK_NAME)
     INPUT_DIR = os.path.join(WORK_DIR, 'data')
     OUTPUT_DIR = os.path.join(WORK_DIR, 'output')
@@ -60,7 +60,6 @@ def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER
     DATA_PATH = os.path.join(OUTPUT_DIR, 'data')
     RUN_FILE = os.path.join(OUTPUT_DIR, 'utils')
     Rosetta_bin = os.path.join(Rosetta, 'bin')
-    PYTHON_PATH = os.popen('which python').readlines()[0].replace('\n', '')
     RUN_DIR = os.popen('pwd').readlines()[0].replace('\n', '')
     THREADS = NODE * NTASKS
     names = {
@@ -128,6 +127,7 @@ if __name__ == '__main__':
     parser.add_argument('--Rosetta_dir', type=str, help='Path to the ROSETTA software')
     parser.add_argument('--output_dir', type=str, default='./', help='Output File Directory')
     parser.add_argument('--proteinopt_bin', type=str, default='./', help='The bin directory of ProteinOpt')
+    parser.add_argument('--python_path', type=str, default='*', help='The ProteinOpt python path')
     args = parser.parse_args()
 
     assert args.super_method in ['atom', 'residue'] , 'super_method should be atom or residue'
@@ -138,10 +138,14 @@ if __name__ == '__main__':
 
     WORK_DIR = args.output_dir
     BIN_DIR = args.proteinopt_bin
+    if args.python_path == '*':
+        PYTHON_PATH = os.popen('which python').readlines()[0].replace('\n', '')
+    else:
+        PYTHON_PATH = args.python_path
 
     preparation(BIN_DIR, WORK_DIR, args.job_name, args.input_file)
     wt_name, all_chains, other_chain, start_pos, end_pos, pdb_total = read_pdb_para(os.path.join(WORK_DIR, args.job_name, 'data', os.path.basename(args.input_file)), args.target_chain)
-    write_config(args.job_name, wt_name, WORK_DIR, all_chains, args.target_chain, other_chain,args.distance, start_pos, end_pos, args.node, args.ntasks, args.num, pdb_total, args.super_method, args.super_target, args.top_pm_num, args.in_site, args.Rosetta_dir)
+    write_config(args.job_name, wt_name, WORK_DIR, all_chains, args.target_chain, other_chain,args.distance, start_pos, end_pos, args.node, args.ntasks, args.num, pdb_total, args.super_method, args.super_target, args.top_pm_num, args.in_site, args.Rosetta_dir, PYTHON_PATH)
     write_bash(WORK_DIR, args.job_name, args.node, args.ntasks)
     # order
     # python stab_dp.py --job_name 6m0j --input_file /share/home/cheny/Projects/stable_final/test/data/6m0j.pdb --target_chain E --distance 7 --num 100 --in_site 498R
