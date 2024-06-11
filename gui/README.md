@@ -1,19 +1,27 @@
-## Before You Begin
+## ProteinOpt Application Setup Instructions
 
-### Prerequisites
+### Before You Begin
 
 - **ProteinOpt Installation**: Before using the ProteinOpt GUI version, ensure that ProteinOpt is correctly installed by following the provided [installation guide](../README.md).
 
 ### Useage
-Users have the option to run the application using either of the following methods:
 
-### On Windows:
-Double-click the `.exe` file to start the application. Ensure that your system meets the necessary requirements to execute the program.
+1. **Download and Extract the Application:**
+   - Users should begin by downloading the `ProteinOpt.zip` file from the `gui` directory.
+   - Once downloaded, extract the contents of the `ProteinOpt.zip` file to a desired location on their system.
 
-### On Linux:
-Double-click the `.AppImage` file to launch the application. This format provides a portable, self-contained application image that is distributable and easy to use.
+2. **Launch the Application:**
+   - After extraction, locate and execute the `ProteinOpt` binary file to initiate the application.
 
-Please make sure that you have the appropriate permissions set for the `.exe` or `.AppImage` file to allow execution.
+3. **Initial Configuration:**
+   - For first-time, it is essential to configure the application by accessing the 'Setting' interface.
+   - Click the 'Setting' button to enter the configuration menu.
+
+4. **Environment Setup:**
+   - In the Settings interface, users are required to set up the necessary environment paths for the application to run correctly.
+   - The following paths must be configured: the bin directory of the ProtionOpt, the bin directory of the Rosetta suite, the Python environment directory of ProtionOpt, and output  directory of ProtionOpt results.
+   - Ensure that each path is set according to the specific requirements of the application and the user's system setup.
+
 
 ### Output files
    The downloaded ProteinOpt result package has the following folder structure:

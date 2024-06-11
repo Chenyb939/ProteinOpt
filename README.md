@@ -73,6 +73,8 @@ To utilize ProteinOpt effectively, follow these steps:
       --super_method          Supercharge methods (if use Supercharge protocol; default: residue)
       --super_target          Supercharge target (if use Supercharge protocol; default: positive)
       --Rosetta_dir           Path to the ROSETTA software
+      --proteinopt_bin        The bin directory of ProteinOpt
+      --python_path           The ProteinOpt python environment path
    ```
 2. Check optimization configurations
    After running, you can open the `./[job_name]/config.yaml` file to view and modify the required configurations.
