@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/697241047.svg)](https://zenodo.org/doi/10.5281/zenodo.12748028)
 # ProteinOpt: Protein Stability Optimization Tool
 
 ProteinOpt is a multi-objective optimization tool specifically designed for vaccine antigens and decoys, leveraging the Rosetta software suite and Snakemake. ProteinOpt is designed to assist researchers in conveniently and swiftly conducting protein stability optimization operations using local resources. ProteinOpt offers four distinct protein optimization methods, including:
