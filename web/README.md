@@ -44,7 +44,6 @@ Modify the configuration file (config.ini) for ProteinOpt. The configuration fil
 host = localhost
 user = your_mysql_database_username
 password = your_mysql_database_password
-database = proteinopt_db
 
 [paths]
 soft_dir = /path/to/your/project/bin
