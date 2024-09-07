@@ -32,7 +32,7 @@ mysql -u root -p
 ```
 Enter your password
 ```
-create database ProteinOpt；
+create database ProteinOpt;
 quit;
 ```
 
