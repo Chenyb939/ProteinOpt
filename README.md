@@ -44,7 +44,7 @@ To get started with ProteinOpt, follow these steps:
    ```bash
    export PATH=$PATH:/path/to/rosetta/source/bin
    export ROSETTA=$ROSETTA:/path/to/rosetta
-   export PATH=$ROSETTA_BIN:/path/to/rosetta/source/bin
+   export ROSETTA_BIN=$ROSETTA_BIN:/path/to/rosetta/source/bin
    ```
    
 ## How to Use
