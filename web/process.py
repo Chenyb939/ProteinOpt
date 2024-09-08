@@ -189,25 +189,25 @@ def find_and_update_task():
         pm_seeds=task_content['seeds']
         command = f'{python_path} {script_path} --job_name {task_name} --input_file {task_file} ' \
                   f'--target_chain {task_chain} --ntasks {task_threads} --num {task_result} ' \
-                  f'--top_pm_num {pm_seeds} --Rosetta_dir {Rosetta_path} --output_dir {work_dir} --proteinopt_bin {soft_dir+"/bin"}'
+                  f'--top_pm_num {pm_seeds} --Rosetta_dir {Rosetta_path} --output_dir {work_dir} --proteinopt_bin {soft_dir+"/bin"} --python_path {python_path}'
     if task_type=="vip":
         command = f'{python_path}  {script_path} --job_name {task_name} --input_file {task_file} ' \
                   f'--target_chain {task_chain} --ntasks {task_threads} --num {task_result} ' \
-                  f'--Rosetta_dir {Rosetta_path} --output_dir {work_dir} --proteinopt_bin {soft_dir+"/bin"}'
+                  f'--Rosetta_dir {Rosetta_path} --output_dir {work_dir} --proteinopt_bin {soft_dir+"/bin"} --python_path {python_path}'
     if task_type=="charge":
         vip_objective=task_content['objective']
         vip_charge = task_content['charge']
         command = f'{python_path}  {script_path} --job_name {task_name} --input_file {task_file} ' \
                   f'--target_chain {task_chain} --ntasks {task_threads} --num {task_result} ' \
                   f'--super_method {vip_objective} --super_target {vip_charge} --Rosetta_dir {Rosetta_path} ' \
-                  f'--output_dir {work_dir} --proteinopt_bin {soft_dir+"/bin"}'
+                  f'--output_dir {work_dir} --proteinopt_bin {soft_dir+"/bin"} --python_path {python_path}'
     if task_type=="manally":
         manally_sites = task_content['sites'].replace(" ", "")
         manally_sites = re.sub(r'([a-zA-Z])\B(\d+)', r'\2', manally_sites).upper()
         # print(manally_sites)
         command = f'{python_path}  {script_path} --job_name {task_name} --input_file {task_file} ' \
                   f'--target_chain {task_chain} --ntasks {task_threads} --num {task_result} ' \
-                  f'--in_site {manally_sites} --Rosetta_dir {Rosetta_path} --output_dir {work_dir} --proteinopt_bin {soft_dir+"/bin"}'
+                  f'--in_site {manally_sites} --Rosetta_dir {Rosetta_path} --output_dir {work_dir} --proteinopt_bin {soft_dir+"/bin"} --python_path {python_path}'
     print("Submitted task content",task_content)
     print("Program command:",command)
     flag = command1(command, task_name, log_file_path,Task,session)
@@ -225,7 +225,7 @@ def find_and_update_task():
         py_path = Path(python_path)
         conda_path = os.path.join(py_path.parents[3], "bin", "activate")
         env_name = py_path.parents[1].name
-
+        print("Environment name:", env_name)
         if task_type=='pm':
             command = f"conda run -n {env_name} bash {work_dir}/{task_name}/snakemake/PMS.sh"
         if task_type=="vip":
