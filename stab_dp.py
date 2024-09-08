@@ -59,7 +59,7 @@ def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER
     UTILS_PATH = os.path.join(WORK_DIR, 'utils')
     DATA_PATH = os.path.join(OUTPUT_DIR, 'data')
     RUN_FILE = os.path.join(OUTPUT_DIR, 'utils')
-    Rosetta_bin = os.path.join(Rosetta, 'bin')
+    Rosetta_bin = os.path.join(Rosetta, 'main/source/bin')
     RUN_DIR = os.popen('pwd').readlines()[0].replace('\n', '')
     THREADS = NODE * NTASKS
     names = {
