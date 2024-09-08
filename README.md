@@ -60,7 +60,7 @@ To utilize ProteinOpt effectively, follow these steps:
    Start by running the `stab_dp.py` script. This script is responsible for processing input files and generating the necessary files required for running.
    
    ```bash
-   usage: python stab_dp.py [--job_name] [--input_file] [--target_chain] [--node] [--ntasks] [--num] [--top_pm_num] [--in_site] [--super_method] [--super_target] [--Rosetta_dir]
+   usage: python stab_dp.py [--job_name] [--input_file] [--target_chain] [--node] [--ntasks] [--num] [--top_pm_num] [--in_site] [--super_method] [--super_target] [--Rosetta_dir] [--proteinopt_bin] [--python_path]
 
    optional arguments:
       --job_name              Task Name
