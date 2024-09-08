@@ -94,7 +94,9 @@ def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER
     }
     with open(os.path.join(WORK_DIR, 'snakemake', 'config.yaml'), 'w') as file:
          yaml.dump(names, file, sort_keys=False)
-
+    with open(os.path.join('config.yaml'), 'w') as file:
+         yaml.dump(names, file, sort_keys=False)
+        
 def write_bash(WORK_DIR, job_name, node, ntasks):
     SNAKE_dir = os.path.join(WORK_DIR, job_name, 'snakemake', '')
     with open(os.path.join(WORK_DIR, job_name, 'snakemake', 'preprocess.sh'), 'w') as file:
