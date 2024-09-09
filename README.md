@@ -32,7 +32,7 @@ To get started with ProteinOpt, follow these steps:
    ```bash
    conda create -n ProteinOpt python=3.9
    conda activate ProteinOpt
-   pip install snakemake biopython pandas
+   pip install snakemake biopython pandas xlwt
    pip install pulp==2.7.0
    ```
 4. Install Rosetta and PyRosetta
