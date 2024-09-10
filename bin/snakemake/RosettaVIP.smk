@@ -41,7 +41,7 @@ rule all:
         DATA_PATH + '/Mutated_Relaxed/score_Relaxed.sc',
         DATA_PATH + '/Mutated_Relaxed/' + WT_NAME + '_final_Relaxed.pdb',
         RUN_FILE + '/RosettaVIP.sh',
-        DATA_PATH + '/Com_PM_VIP/socre.sc'
+        DATA_PATH + '/Com_PM_VIP/success.log'
     
 
 rule gen_VIP_ref:
@@ -212,12 +212,13 @@ rule Com_PM:
     input:
         RUN_FILE + '/RosettaVIP.sh'
     output:
-        DATA_PATH + '/Com_PM_VIP/socre.sc'
+        DATA_PATH + '/Com_PM_VIP/success.log'
     params:
         DATA_PATH + '/Com_PM_VIP'
     threads:
         THREADS
     shell:
         """
-        mkdir -p {params} && sh {input}   
+        mkdir -p {params}
+        sh {input} && touch {output}
         """

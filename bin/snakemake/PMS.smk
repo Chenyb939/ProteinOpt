@@ -33,7 +33,7 @@ TOP_PM_NUM = config['TOP_PM_NUM']
 rule all:
     input:
         RUN_FILE + '/PMS.sh',
-        DATA_PATH + '/Com_PM_PM/socre.sc'
+        DATA_PATH + '/Com_PM_PM/success.log'
 
 
 rule gen_Com_PM:
@@ -83,12 +83,13 @@ rule Com_PM:
     input:
         RUN_FILE + '/PMS.sh'
     output:
-        DATA_PATH + '/Com_PM_PM/socre.sc'
+        DATA_PATH + '/Com_PM_PM/success.log'
     params:
         DATA_PATH + '/Com_PM_PM'
     threads:
         THREADS
     shell:
         """
-        mkdir -p {params} && sh {input}   
+        mkdir -p {params}
+        sh {input} && touch {output}
         """

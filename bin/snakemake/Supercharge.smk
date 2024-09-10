@@ -38,7 +38,7 @@ rule all:
         DATA_PATH + '/Mutated_Relaxed/score_Relaxed.sc',
         DATA_PATH + '/Mutated_Relaxed/' + WT_NAME + '_final_Relaxed.pdb',
         RUN_FILE + '/Supercharge.sh',
-        DATA_PATH + '/Com_PM_41/socre.sc'
+        DATA_PATH + '/Com_PM_41/success.log'
 
 
 rule SUPERCHARGE:
@@ -145,12 +145,13 @@ rule Com_PM:
     input:
         RUN_FILE + '/Supercharge.sh'
     output:
-        DATA_PATH + '/Com_PM_41/socre.sc'
+        DATA_PATH + '/Com_PM_41/success.log'
     params:
         DATA_PATH + '/Com_PM_41'
     threads:
         THREADS
     shell:
         """
-        mkdir -p {params} && sh {input}   
+        mkdir -p {params}
+        sh {input} && touch {output}
         """

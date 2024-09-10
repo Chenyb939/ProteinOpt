@@ -36,7 +36,7 @@ rule all:
         DATA_PATH +'/Supercharge/' + WT_NAME + '_Mutated.pdb',
         DATA_PATH +'/Supercharge/' + 'resfile_output_Rsc.txt',
         RUN_FILE + '/Supercharge_ref.sh',
-        DATA_PATH + '/Com_PM_42/socre.sc'
+        DATA_PATH + '/Com_PM_42/success.log'
 
 
 rule SUPERCHARGE:
@@ -125,12 +125,13 @@ rule Com_PM:
     input:
         RUN_FILE + '/Supercharge_ref.sh'
     output:
-        DATA_PATH + '/Com_PM_42/socre.sc'
+        DATA_PATH + '/Com_PM_42/success.log'
     params:
         DATA_PATH + '/Com_PM_42'
     threads:
         THREADS
     shell:
         """
-        mkdir -p {params} && sh {input}   
+        mkdir -p {params}
+        sh {input} && touch {output}
         """
