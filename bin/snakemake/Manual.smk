@@ -38,7 +38,7 @@ rule all:
         DATA_PATH + '/Mutated_Relaxed/score_Relaxed.sc',
         DATA_PATH + '/Mutated_Relaxed/' + WT_NAME + '_final_Relaxed.pdb',
         RUN_FILE + '/Manual.sh',
-        DATA_PATH + '/Com_PM_DMS/socre.sc'
+        DATA_PATH + '/Com_PM_DMS/success.log'
     
 
 rule gen_Mutate:
@@ -153,12 +153,13 @@ rule Com_PM:
     input:
         RUN_FILE + '/Manual.sh'
     output:
-        DATA_PATH + '/Com_PM_DMS/socre.sc'
+        DATA_PATH + '/Com_PM_DMS/success.log'
     params:
         DATA_PATH + '/Com_PM_DMS'
     threads:
         THREADS
     shell:
         """
-        mkdir -p {params} && sh {input}   
+        mkdir -p {params}
+        sh {input} && touch {output}
         """
