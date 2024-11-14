@@ -16,8 +16,8 @@ def preparation(BIN_DIR, WORK_DIR, WORK_NAME, INPUT_FILE):
 
     shutil.copytree(os.path.join(BIN_DIR, 'snakemake'), os.path.join(WORK_DIR, WORK_NAME, 'snakemake'))
     shutil.copytree(os.path.join(BIN_DIR, 'utils'), os.path.join(WORK_DIR, WORK_NAME, 'utils'))
-    shutil.move(INPUT_FILE, os.path.join(WORK_DIR, WORK_NAME, 'data'))
-    # shutil.copy(INPUT_FILE, os.path.join(WORK_DIR, WORK_NAME, 'data'))
+    # shutil.move(INPUT_FILE, os.path.join(WORK_DIR, WORK_NAME, 'data'))
+    shutil.copy(INPUT_FILE, os.path.join(WORK_DIR, WORK_NAME, 'data'))
 
 def read_pdb_para(input_file, target_chain):
     p = PDBParser()
@@ -94,23 +94,23 @@ def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER
     }
     with open(os.path.join(WORK_DIR, 'snakemake', 'config.yaml'), 'w') as file:
          yaml.dump(names, file, sort_keys=False)
-    with open(os.path.join('config.yaml'), 'w') as file:
-         yaml.dump(names, file, sort_keys=False)
-        
+    # with open(os.path.join('config.yaml'), 'w') as file:
+    #      yaml.dump(names, file, sort_keys=False)
+
 def write_bash(WORK_DIR, job_name, node, ntasks):
     SNAKE_dir = os.path.join(WORK_DIR, job_name, 'snakemake', '')
     with open(os.path.join(WORK_DIR, job_name, 'snakemake', 'preprocess.sh'), 'w') as file:
-        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}_preprocess\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}preprocess.smk -j {node*ntasks}')
+        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}_%j.out\n#SBATCH --job-name {job_name}_preprocess\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}preprocess.smk --configfile {SNAKE_dir}config.yaml -j {node*ntasks}')
     with open(os.path.join(WORK_DIR, job_name,'snakemake', 'PMS.sh'), 'w') as file:
-        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}_PMS\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}PMS.smk -j {node*ntasks}')
+        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}_%j.out\n#SBATCH --job-name {job_name}_PMS\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}PMS.smk --configfile {SNAKE_dir}config.yaml -j {node*ntasks}')
     with open(os.path.join(WORK_DIR, job_name,'snakemake', 'Supercharge.sh'), 'w') as file:
-        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}_Supercharge\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}Supercharge.smk -j {node*ntasks}')
+        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}_%j.out\n#SBATCH --job-name {job_name}_Supercharge\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}Supercharge.smk --configfile {SNAKE_dir}config.yaml -j {node*ntasks}')
     with open(os.path.join(WORK_DIR, job_name,'snakemake', 'Supercharge_ref.sh'), 'w') as file:
-        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}_Supercharge_ref\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}Supercharge_ref.smk -j {node*ntasks}')
+        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}_%j.out\n#SBATCH --job-name {job_name}_Supercharge_ref\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}Supercharge_ref.smk --configfile {SNAKE_dir}config.yaml -j {node*ntasks}')
     with open(os.path.join(WORK_DIR, job_name,'snakemake', 'RosettaVIP.sh'), 'w') as file:
-        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}_RosettaVIP\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}RosettaVIP.smk -j {node*ntasks}')
+        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}_%j.out\n#SBATCH --job-name {job_name}_RosettaVIP\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}RosettaVIP.smk --configfile {SNAKE_dir}config.yaml -j {node*ntasks}')
     with open(os.path.join(WORK_DIR, job_name,'snakemake', 'Manual.sh'), 'w') as file:
-        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}%j.out\n#SBATCH --job-name {job_name}_Manual\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}Manual.smk -j {node*ntasks}')
+        file.write(f'#!/bin/bash\n#SBATCH --output {job_name}_%j.out\n#SBATCH --job-name {job_name}_Manual\n#SBATCH --nodes={node}\n#SBATCH --ntasks-per-node={ntasks}\n\nsnakemake -s {SNAKE_dir}Manual.smk --configfile {SNAKE_dir}config.yaml -j {node*ntasks}')
 
 
 if __name__ == '__main__':
