@@ -1,4 +1,4 @@
-# tested
+# Rosetta
 FROM ubuntu:18.04
 MAINTAINER Zilin Ren "zilin.ren@outlook.com"
 
@@ -18,7 +18,8 @@ RUN apt-get install libopenmpi-dev openmpi-bin -y
 RUN apt-get install vim ssh -y
 RUN apt-get install openmpi-bin openmpi-doc libopenmpi-dev -y 
 
-RUN wget -c --http-user=<account> --http-passwd=<password> https://www.rosettacommons.org/downloads/academic/2022/wk11/rosetta.source.release-314.tar.bz2
+# RUN wget -c --http-user=<account> --http-passwd=<password> https://www.rosettacommons.org/downloads/academic/2022/wk11/rosetta.source.release-314.tar.bz2
+RUN wget -c https://www.rosettacommons.org/downloads/academic/2022/wk11/rosetta.source.release-314.tar.bz2
 
 RUN tar -xjf rosetta.source.release-314.tar.bz2 
 
