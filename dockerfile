@@ -19,10 +19,9 @@ RUN apt-get install vim ssh -y
 RUN apt-get install openmpi-bin openmpi-doc libopenmpi-dev -y 
 
 # RUN wget -c --http-user=<account> --http-passwd=<password> https://www.rosettacommons.org/downloads/academic/2022/wk11/rosetta.source.release-314.tar.bz2
-RUN wget -c https://www.rosettacommons.org/downloads/academic/2022/wk11/rosetta.source.release-314.tar.bz2
+RUN wget -c https://downloads.rosettacommons.org/downloads/academic/2022/wk11/rosetta.source.release-314.tar.bz2
 
 RUN tar -xjf rosetta.source.release-314.tar.bz2 
-
 
 WORKDIR rosetta.source.release-314/main/source/
 RUN python ./scons.py -j 20 mode=release bin 
