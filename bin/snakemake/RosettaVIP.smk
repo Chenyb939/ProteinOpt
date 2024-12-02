@@ -174,7 +174,7 @@ rule gen_Com_PM:
         Chain = TARGET_CHAIN,
         Start_pos = PDB_START,
         End_pos = PDB_END,
-        Out_path = DATA_PATH + '/Com_PM_VIP',
+        Out_path = DATA_PATH + '/Com_VIP',
         Scripts_path = UTILS_PATH + '/MC/ComboPM_with.xml',
         Name = WORK_NAME,
         Node = NODE,
@@ -208,7 +208,7 @@ rule Com_PM:
     output:
         RUN_FILE + '/VIP_success.log'
     params:
-        CM_PATH = DATA_PATH + '/Com_PM_VIP',
+        CM_PATH = DATA_PATH + '/Com_VIP',
         success_log = OUTPUT_DIR + 'success.log'
     threads:
         THREADS
