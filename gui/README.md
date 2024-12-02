@@ -47,11 +47,11 @@
    │       ├── PM                  The Single-point mutation scanning result
    │       ├── Mutated             The mutated file after find seed residues
    │       ├── Mutated_Relaxed     The relax result of mutated file
-   │       ├── Com_PM_VIP          The RosettaVIP protocol results
-   │       ├── Com_PM_PM           The PMS protocol results
-   │       ├── Com_PM_DMS          The Manual protocol results
-   │       ├── Com_PM_41           The supercharge protocol results
-   │       ├── Com_PM_42           The supercharge protocol (ues reference) results
+   │       ├── Com_VIP             The RosettaVIP protocol results
+   │       ├── Com_PMS             The PMS protocol results
+   │       ├── Com_Manual          The Manual protocol results
+   │       ├── Com_Super           The supercharge protocol results
+   │       ├── Com_SuperREF        The supercharge protocol (ues reference) results
    │       └── Cleaned_WT          The cleaned input file
    │
    └── data                        The input PDB file
