@@ -35,10 +35,10 @@ rule all:
         DATA_PATH +'/Supercharge' + '/success.log',
         DATA_PATH +'/Supercharge/' + WT_NAME + '_Mutated.pdb',
         DATA_PATH +'/Supercharge/' + 'resfile_output_Rsc.txt',
-        DATA_PATH + '/Mutated_Relaxed/score_Relaxed.sc',
-        DATA_PATH + '/Mutated_Relaxed/' + WT_NAME + '_final_Relaxed.pdb',
+        DATA_PATH + '/SuperMutated_Relaxed/score_Relaxed.sc',
+        DATA_PATH + '/SuperMutated_Relaxed/' + WT_NAME + '_final_Relaxed.pdb',
         RUN_FILE + '/Supercharge.sh',
-        DATA_PATH + '/Com_PM_41/success.log'
+        RUN_FILE + '/Super_success.log'
 
 
 rule SUPERCHARGE:
@@ -85,12 +85,12 @@ rule Relax_Mutated:
     input:
         Mutated_name = DATA_PATH +'/Supercharge/' + WT_NAME + '_Mutated.pdb'
     output:
-        Relaxed = DATA_PATH + '/Mutated_Relaxed/score_Relaxed.sc',
-        New_name = DATA_PATH + '/Mutated_Relaxed/' + WT_NAME + '_final_Relaxed.pdb'
+        Relaxed = DATA_PATH + '/SuperMutated_Relaxed/score_Relaxed.sc',
+        New_name = DATA_PATH + '/SuperMutated_Relaxed/' + WT_NAME + '_final_Relaxed.pdb'
     params:
         Flags_path = UTILS_PATH + '/relax/relax.flags',
-        Out_path = DATA_PATH + '/Mutated_Relaxed/',
-        Out_name = DATA_PATH + '/Mutated_Relaxed/' + WT_NAME + '_Mutated_Relaxed_0001.pdb'
+        Out_path = DATA_PATH + '/SuperMutated_Relaxed/',
+        Out_name = DATA_PATH + '/SuperMutated_Relaxed/' + WT_NAME + '_Mutated_Relaxed_0001.pdb'
     threads:
         1
     shell:
@@ -104,7 +104,7 @@ rule Relax_Mutated:
 
 rule gen_Com_PM:
     input:
-        Supercharge_path = DATA_PATH + '/Mutated_Relaxed/' + WT_NAME + '_final_Relaxed.pdb'
+        Supercharge_path = DATA_PATH + '/SuperMutated_Relaxed/' + WT_NAME + '_final_Relaxed.pdb'
     output:
         Shell_file = RUN_FILE + '/Supercharge.sh'
     params:
@@ -115,7 +115,7 @@ rule gen_Com_PM:
         Chain = TARGET_CHAIN,
         Start_pos = PDB_START,
         End_pos = PDB_END,
-        Out_path = DATA_PATH + '/Com_PM_41',
+        Out_path = DATA_PATH + '/Com_Super',
         Name = WORK_NAME,
         Node = NODE,
         Ntasks = NTASKS,
@@ -145,13 +145,14 @@ rule Com_PM:
     input:
         RUN_FILE + '/Supercharge.sh'
     output:
-        DATA_PATH + '/Com_PM_41/success.log'
+        RUN_FILE + '/Super_success.log'
     params:
-        DATA_PATH + '/Com_PM_41'
+        CM_PATH = DATA_PATH + '/Com_Super',
+        success_log = OUTPUT_DIR + 'success.log'
     threads:
         THREADS
     shell:
         """
-        mkdir -p {params}
-        sh {input} && touch {output}
+        mkdir -p {params.CM_PATH}
+        sh {input} && touch {output} && touch {params.success_log}
         """

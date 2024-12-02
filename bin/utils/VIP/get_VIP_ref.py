@@ -1,11 +1,9 @@
 import os
 import argparse
 from Bio.PDB import PDBParser
+import warnings
 
-def get_mutant_pos(out_path, start, end, chain):
-    with open(out_path, 'w') as file:
-        for i in range(int(start), int(end) + 1):
-            file.write(f'{i} {chain}\n')
+warnings.filterwarnings('ignore')
 
 def get_mutant_pos_new(out_path, pdb_path, target_chain):
     p=PDBParser()
@@ -42,15 +40,9 @@ def get_mutant_pos_new(out_path, pdb_path, target_chain):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('Generate ref file for VIP')
-    # parser.add_argument('--out_path', type=str, default='./', help='out path')
-    # parser.add_argument('--start', type=str, default=196, help='start pos')
-    # parser.add_argument('--end', type=str, default=322, help='end pos')
-    # parser.add_argument('--chain', type=str, default='F', help='chain do not design')
-    parser.add_argument('--out_path', type=str, default='./', help='out path')
+    parser.add_argument('--out_path', type=str, default='./Chain.txt', help='out path')
     parser.add_argument('--pdb_path', type=str, default='./', help='PDB file to be designed')
     parser.add_argument('--target_chain', type=str, default='E', help='Chain to be designed')
 
     args = parser.parse_args()
-    
-    # get_mutant_pos(args.out_path, args.start, args.end, args.chain)
     get_mutant_pos_new(args.out_path, args.pdb_path, args.target_chain)

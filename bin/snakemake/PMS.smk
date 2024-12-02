@@ -33,8 +33,7 @@ TOP_PM_NUM = config['TOP_PM_NUM']
 rule all:
     input:
         RUN_FILE + '/PMS.sh',
-        DATA_PATH + '/Com_PM_PM/success.log'
-
+        RUN_FILE + '/PMS_success.log'
 
 rule gen_Com_PM:
     input:
@@ -52,7 +51,7 @@ rule gen_Com_PM:
         Chain = TARGET_CHAIN,
         Start_pos = PDB_START,
         End_pos = PDB_END,
-        Out_path = DATA_PATH + '/Com_PM_PM',
+        Out_path = DATA_PATH + '/Com_PMS',
         Name = WORK_NAME,
         Node = NODE,
         Ntasks = NTASKS,
@@ -83,13 +82,14 @@ rule Com_PM:
     input:
         RUN_FILE + '/PMS.sh'
     output:
-        DATA_PATH + '/Com_PM_PM/success.log'
+        RUN_FILE + '/PMS_success.log'
     params:
-        DATA_PATH + '/Com_PM_PM'
+        CM_PATH = DATA_PATH + '/Com_PMS',
+        success_log = OUTPUT_DIR + 'success.log'
     threads:
         THREADS
     shell:
         """
-        mkdir -p {params}
-        sh {input} && touch {output}
+        mkdir -p {params.CM_PATH}
+        sh {input} && touch {output} && touch {params.success_log}
         """

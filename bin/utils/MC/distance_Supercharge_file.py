@@ -7,6 +7,9 @@ from Bio import pairwise2
 from Bio.pairwise2 import format_alignment
 from pyrosetta import pose_from_pdb, init
 from pyrosetta.rosetta.core.select.residue_selector import NeighborhoodResidueSelector, ResidueIndexSelector
+import warnings
+
+warnings.filterwarnings('ignore')
 
 def get_neighborhood(pdbpath, site_list, dist):
     init()
@@ -70,13 +73,22 @@ def get_mutant_pos(input1, input2, chain):
 
     seq1 = old_seq_lst[old_chain_lst.index(chain)]
     seq2 = new_seq_lst[new_chain_lst.index(chain)]
-    alignments = pairwise2.align.globalxx(seq1, seq2)
-    res = format_alignment(*alignments[-1])
+    # alignments = pairwise2.align.globalxx(seq1, seq2)
+    # res = format_alignment(*alignments[-1])
+    # pos_lst = []
+    # label = 0
+    # for index, value in enumerate(res.split('\n')[1]):
+    #     if value == '.':
+    #         pos_lst.append(index + 1)
 
-    pos_lst = []
-    for index, value in enumerate(res.split('\n')[1]):
-        if value == '.':
-            pos_lst.append(index + 1)
+    # if pos_lst == []:
+    #     for index1, value in enumerate(res.split('\n')[2]):
+    #         if value == '-':
+    #             pos_lst.append(index + 1 - label)
+    #             label = label + 1 
+
+    pos_lst = [index + 1 for index, (a, b) in enumerate(zip(seq1, seq2)) if a != b]
+
     pos_lst.sort(reverse=False)
     pos_lst_new = [str(i) + chain for i in pos_lst]
     return pos_lst_new
@@ -111,6 +123,7 @@ if __name__ == '__main__':
     pos_lst = get_mutant_pos(args.wt_path, args.super_path, args.chain)
 
     # neigh = neighbor(args.super_path, pos_lst, args.distance, max_len, args.chain)
+
     neigh = ",".join(pos_lst)
     gene_compm(args.shell_path, args.name, args.node, args.ntasks, args.super_path, args.wt_path, args.out_path, args.xml_path, args.ref_path, args.num, neigh, args.chain)
     

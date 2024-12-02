@@ -154,7 +154,8 @@ work_dir = config.get('PATH', 'work_dir')
 soft_dir = config.get('PATH', 'soft_dir')
 python_path=config.get('PATH', 'python_dir')
 Rosetta_path=config.get('PATH', 'Rosetta_dir')
-host = config.get('DATABASE', 'host')
+# host = config.get('DATABASE', 'host')
+host = "localhost"
 user = config.get('DATABASE', 'user')
 password = config.get('DATABASE', 'password')
 DATABASE_URI = f'mysql+pymysql://{user}:{password}@{host}:3306/ProteinOpt?charset=utf8mb4'

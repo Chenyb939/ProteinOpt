@@ -1,4 +1,7 @@
 import argparse
+import warnings
+
+warnings.filterwarnings('ignore')
 
 def write_mutant_xml(in_site, out_path, chain, start_pos):
     site_lst = in_site.replace(' ', '').split(',')

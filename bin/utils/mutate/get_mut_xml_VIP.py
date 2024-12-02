@@ -1,4 +1,8 @@
 import argparse
+import warnings
+
+warnings.filterwarnings('ignore')
+
 def get_mutant_pos(path):
     with open(path, 'r') as file:
         position_lst = []

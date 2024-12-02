@@ -36,8 +36,7 @@ rule all:
         DATA_PATH +'/Supercharge/' + WT_NAME + '_Mutated.pdb',
         DATA_PATH +'/Supercharge/' + 'resfile_output_Rsc.txt',
         RUN_FILE + '/Supercharge_ref.sh',
-        DATA_PATH + '/Com_PM_42/success.log'
-
+        RUN_FILE + '/Superref_success.log'
 
 rule SUPERCHARGE:
     input:
@@ -92,7 +91,7 @@ rule gen_Com_PM:
         Start_pos = PDB_START,
         End_pos = PDB_END,
         Relax_path = DATA_PATH + '/Relaxed_WT/' + WT_NAME + '_Relaxed.pdb',
-        Out_path = DATA_PATH + '/Com_PM_42',
+        Out_path = DATA_PATH + '/Com_SuperREF',
         Scripts_path = UTILS_PATH + '/MC/ComboPM_with.xml',
         Name = WORK_NAME,
         Node = NODE,
@@ -125,13 +124,14 @@ rule Com_PM:
     input:
         RUN_FILE + '/Supercharge_ref.sh'
     output:
-        DATA_PATH + '/Com_PM_42/success.log'
+        RUN_FILE + '/Superref_success.log'
     params:
-        DATA_PATH + '/Com_PM_42'
+        CM_PATH = DATA_PATH + '/Com_SuperREF',
+        success_log = OUTPUT_DIR + 'success.log'
     threads:
         THREADS
     shell:
         """
-        mkdir -p {params}
-        sh {input} && touch {output}
+        mkdir -p {params.CM_PATH}
+        sh {input} && touch {output} && touch {params.success_log}
         """

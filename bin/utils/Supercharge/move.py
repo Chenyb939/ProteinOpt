@@ -1,7 +1,9 @@
 import argparse
 import os
 import shutil
+import warnings
 
+warnings.filterwarnings('ignore')
 
 def move_pdb(input_path, wt_name, output_pdb, output_ref):
     file_lst = os.listdir(input_path)

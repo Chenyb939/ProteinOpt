@@ -1,7 +1,8 @@
 #!/bin/bash
-#SBATCH --output RosettaVIP%j.out
-#SBATCH --job-name RosettaVIP
+#SBATCH --output preprocess%j.out
+#SBATCH --job-name preprocess
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=32
 
-snakemake -s RosettaVIP.smk -j 32
+snakemake -s ./snakemake/preprocess.smk --unlock
+snakemake -s ./snakemake/RosettaVIP.smk --configfile ./snakemake/config.yaml -j 180

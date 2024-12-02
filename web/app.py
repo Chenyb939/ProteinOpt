@@ -15,9 +15,13 @@ import configparser
 config = configparser.ConfigParser()
 config.read('config.ini')
 work_dir = config.get('PATH', 'work_dir')
-host = config.get('DATABASE', 'host')
+# host = config.get('DATABASE', 'host')
+host = "localhost"
 user = config.get('DATABASE', 'user')
 password = config.get('DATABASE', 'password')
+
+web_ip = config.get('WEB', 'ip')
+web_port = config.get('WEB', 'port')
 
 app=Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
@@ -171,4 +175,5 @@ def my_workspace():
     return jsonify({'htmlContent': html_content})
 
 if __name__=='__main__':
-    app.run()
+    # app.run()
+    app.run(host=str(web_ip), port=int(web_port))

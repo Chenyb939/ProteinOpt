@@ -38,8 +38,8 @@ rule all:
         DATA_PATH + '/Mutated_Relaxed/score_Relaxed.sc',
         DATA_PATH + '/Mutated_Relaxed/' + WT_NAME + '_final_Relaxed.pdb',
         RUN_FILE + '/Manual.sh',
-        DATA_PATH + '/Com_PM_DMS/success.log'
-    
+        RUN_FILE + '/Manual_success.log'
+
 
 rule gen_Mutate:
     input:
@@ -120,7 +120,7 @@ rule gen_Com_PM:
         Chain = TARGET_CHAIN,
         Start_pos = PDB_START,
         End_pos = PDB_END,
-        Out_path = DATA_PATH + '/Com_PM_DMS',
+        Out_path = DATA_PATH + '/Com_Manual',
         Scripts_path = UTILS_PATH + '/MC/ComboPM_without.xml',
         Name = WORK_NAME,
         Node = NODE,
@@ -153,13 +153,14 @@ rule Com_PM:
     input:
         RUN_FILE + '/Manual.sh'
     output:
-        DATA_PATH + '/Com_PM_DMS/success.log'
+        RUN_FILE + '/Manual_success.log'
     params:
-        DATA_PATH + '/Com_PM_DMS'
+        CM_PATH = DATA_PATH + '/Com_Manual',
+        success_log = OUTPUT_DIR + 'success.log'
     threads:
         THREADS
     shell:
         """
-        mkdir -p {params}
-        sh {input} && touch {output}
+        mkdir -p {params.CM_PATH}
+        sh {input} && touch {output} && touch {params.success_log}
         """

@@ -46,10 +46,12 @@ def read_pdb_para(input_file, target_chain):
     start_pos = target_pos_num_sort[0]
     end_pos = target_pos_num_sort[-1]
     other_chain = all_chains.replace(target_chain, '')
+    all_chain = target_chain + other_chain
+    pdb_len = int(end_pos) - int(start_pos) + 1
+    # pdb_len = 0
+    # for i in all_pos:
+    #     pdb_len += len(i)
 
-    pdb_len = 0
-    for i in all_pos:
-        pdb_len += len(i)
     return name, all_chains, other_chain, int(start_pos), int(end_pos), pdb_len
 
 def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER_CHAIN, DISTANCE, PDB_START, PDB_END, NODE, NTASKS, NUM, PDB_TOTAL, TARGET_METHOD, TARGET_CHARGE, TOP_PM_NUM, IN_SITE, Rosetta, PYTHON_PATH):
@@ -62,13 +64,14 @@ def write_config(WORK_NAME, WT_NAME, WORK_DIR, ALL_CHAINS, TARGET_CHAIN, ANOTHER
     Rosetta_bin = os.path.join(Rosetta, 'main/source/bin')
     RUN_DIR = os.popen('pwd').readlines()[0].replace('\n', '')
     THREADS = NODE * NTASKS
+    TARGET_CHAIN = TARGET_CHAIN.upper()
     names = {
     'ROSETTA': Rosetta,
     'ROSETTA_BIN': Rosetta_bin,
     'WORK_NAME': WORK_NAME,
     'WT_NAME': WT_NAME,
     'WORK_DIR': WORK_DIR,
-    'INPUT_DIR': INPUT_DIR,
+    'INPUT_DIR': INPUT_DIR,W
     'OUTPUT_DIR': OUTPUT_DIR,
     'RUN_DIR': RUN_DIR,
     'UTILS_PATH': UTILS_PATH,
@@ -151,7 +154,7 @@ if __name__ == '__main__':
     parser.add_argument('--top_pm_num', type=int, default=10, help='number of point mutation selected')
     parser.add_argument('--in_site', type=str, default='1F,52I', help='location of mutation point, such as "1F,52I"')
     parser.add_argument('--Rosetta_dir', type=str, help='Path to the ROSETTA software')
-    parser.add_argument('--output_dir', type=str, default='./', help='Output File Directory')
+    parser.add_argument('--output_dir', type=str, default='', help='Output File Directory')
     parser.add_argument('--proteinopt_bin', type=str, default='./', help='The bin directory of ProteinOpt')
     parser.add_argument('--python_path', type=str, default='*', help='The ProteinOpt python path')
     args = parser.parse_args()
@@ -161,8 +164,11 @@ if __name__ == '__main__':
 
     # WORK_DIR = str(os.getcwd())
     # BIN_DIR = str(os.path.join(WORK_DIR, 'bin'))
-
+    
     WORK_DIR = args.output_dir
+    if WORK_DIR == '':
+        WORK_DIR = os.path.abspath(os.curdir) + '/'
+
     BIN_DIR = args.proteinopt_bin
     if args.python_path == '*':
         PYTHON_PATH = os.popen('which python').readlines()[0].replace('\n', '')

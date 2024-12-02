@@ -1,4 +1,8 @@
 import argparse
+import warnings
+
+warnings.filterwarnings('ignore')
+
 def per_process(input, output, target_chain):
     with open(input, 'r') as file, open(output, 'w') as file2:
         lines = file.readlines()
@@ -8,6 +12,7 @@ def per_process(input, output, target_chain):
                     file2.write(line)
             else:
                 pass
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('Generate xml file for mutation')
     parser.add_argument('--wt_path', type=str, default='/public/cheny/stability/test_stab_v0/6m0j.pdb', help='WT pdb file')

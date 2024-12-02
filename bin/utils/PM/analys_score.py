@@ -2,7 +2,9 @@ import os
 import argparse
 import pandas as pd
 import xlwt
+import warnings
 
+warnings.filterwarnings('ignore')
 
 def get_median(data):
     data.sort()

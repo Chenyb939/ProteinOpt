@@ -1,4 +1,4 @@
-# Rosetta
+# tested
 FROM ubuntu:18.04
 MAINTAINER Zilin Ren "zilin.ren@outlook.com"
 
@@ -18,16 +18,16 @@ RUN apt-get install libopenmpi-dev openmpi-bin -y
 RUN apt-get install vim ssh -y
 RUN apt-get install openmpi-bin openmpi-doc libopenmpi-dev -y 
 
-# RUN wget -c --http-user=<account> --http-passwd=<password> https://www.rosettacommons.org/downloads/academic/2022/wk11/rosetta.source.release-314.tar.bz2
-RUN wget -c https://downloads.rosettacommons.org/downloads/academic/2022/wk11/rosetta.source.release-314.tar.bz2
+RUN wget -c --http-user=<account> --http-passwd=<password> https://downloads.rosettacommons.org/downloads/academic/2023/wk45/rosetta.source.release-362.tar.bz2
 
-RUN tar -xjf rosetta.source.release-314.tar.bz2 
+RUN tar -xjf rosetta.source.release-362.tar.bz2
 
-WORKDIR rosetta.source.release-314/main/source/
+
+WORKDIR rosetta.source.release-362/main/source/
 RUN python ./scons.py -j 20 mode=release bin 
 RUN python ./scons.py -j 20 mode=release bin extras=mpi
 RUN echo export PATH=$PATH:`pwd`/bin >> ~/.bashrc
 
 
 WORKDIR / 
-RUN rm rosetta.source.release-314.tar.bz2
+RUN rm rosetta.source.release-362.tar.bz2

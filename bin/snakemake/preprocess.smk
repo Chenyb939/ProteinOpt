@@ -35,7 +35,6 @@ POS_LST = [str(i+1) for i in range((PDB_END - PDB_START + 1))]
 ## main
 rule all:
     input:
-        DATA_PATH + '/WT/' + WT_NAME + '.pdb',
         DATA_PATH + '/Cleaned_WT/' + WT_NAME + '_' + TARGET_CHAIN + '.pdb',
         DATA_PATH + '/Cleaned_WT/' + WT_NAME + '_' + TARGET_CHAIN + '.fasta',
         DATA_PATH + '/Relaxed_WT/score_Relaxed.sc',
@@ -50,11 +49,9 @@ rule Clean_WT:
     input:
         WT = WORK_DIR + '/data' + '/' + WT_NAME + '.pdb'
     output:
-        New_WT = DATA_PATH + '/WT/' + WT_NAME + '.pdb',
         Cleaned = DATA_PATH + '/Cleaned_WT/' + WT_NAME + '_' + TARGET_CHAIN + '.pdb',
         Out_TARGET_fa = DATA_PATH + '/Cleaned_WT/' + WT_NAME + '_' + TARGET_CHAIN + '.fasta',
     params:
-        Process = UTILS_PATH + '/PM/process.py',
         PDB_out = WT_NAME + '_' + TARGET_CHAIN + '.pdb',
         TARGET_fa = WT_NAME + '_' + TARGET_CHAIN + '.fasta',
         Python_path = PYTHON_PATH,
@@ -63,8 +60,7 @@ rule Clean_WT:
         1
     shell:
         """
-        {params.Python_path} {params.Process} --wt_path {input.WT} --out_path {output.New_WT} --chain {params.Chain} && \
-        {params.Python_path} {ROSETTA}/main/tools/protein_tools/scripts/clean_pdb.py {output.New_WT} {params.Chain} && \
+        {params.Python_path} {ROSETTA}/main/tools/protein_tools/scripts/clean_pdb.py {input.WT} {params.Chain} && \
         mv {params.TARGET_fa} {output.Out_TARGET_fa} && \
         mv {params.PDB_out} {output.Cleaned}
         """

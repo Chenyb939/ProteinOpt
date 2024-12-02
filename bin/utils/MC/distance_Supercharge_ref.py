@@ -3,6 +3,9 @@ import argparse
 import copy
 from pyrosetta import pose_from_pdb, init
 from pyrosetta.rosetta.core.select.residue_selector import NeighborhoodResidueSelector, ResidueIndexSelector
+import warnings
+
+warnings.filterwarnings('ignore')
 
 def get_neighborhood(pdbpath, site_list, dist):
     init()

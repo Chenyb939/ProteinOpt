@@ -37,9 +37,8 @@ To get started with ProteinOpt, follow these steps:
    ```
 4. Install Rosetta and PyRosetta
    
-   For installation on Linux machines, you can follow the tutorials on the Rosetta official website or use the Dockerfile we provided. 
+   For installation on Linux machines, you can follow the tutorials on the Rosetta. 
    If you intend to install the Rosetta software suite on an HPC system, please contact your system administrator. 
-   Please be aware that, before installation, it is necessary to modify the line 21 of the Dockerfile, replacing 'account' and 'password' with the Rosetta account and password you have obtained. You can obtain licenses for Rosetta and PyRosetta by visiting the official [Rosetta](https://www.rosettacommons.org/software/license-and-download) website. 
 
    After installation, use the following command to configure the Rosetta environment variables.
    ```bash
