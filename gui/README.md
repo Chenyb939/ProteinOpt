@@ -21,8 +21,7 @@
    - In the Settings interface, users are required to set up the necessary environment paths for the application to run correctly.
    - The following paths must be configured: the bin directory of the ProtionOpt, the bin directory of the Rosetta suite, the Python environment directory of ProtionOpt, and output  directory of ProtionOpt results.
    - Ensure that each path is set according to the specific requirements of the application and the user's system setup.
-4. ** Setup:**
-    - Users can select one of the four provided optimization techniques based on their specific needs.
+   - Users can select one of the four provided optimization techniques based on their specific needs.
 
 ### Output files
    The downloaded ProteinOpt result package has the following folder structure:
